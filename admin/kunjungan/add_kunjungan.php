@@ -88,8 +88,13 @@
 						</div>
 
 						<div class="form-group">
-							<label> Makan dan biaya lain – lain</label>
-							<input type="number" name="makan" id="makan" class="form-control" placeholder=" Makan dan biaya lain – lain">
+							<label>Konsumsi</label>
+							<input type="number" name="makan" id="makan" class="form-control" placeholder="Biaya Konsumsi">
+						</div>
+
+						<div class="form-group">
+							<label>Lainnya</label>
+							<input type="number" name="lainnya" id="lainnya" class="form-control" placeholder="Biaya lain – lain">
 						</div>
 
 						<div class="form-group">
@@ -128,7 +133,7 @@
 if (isset($_POST['Simpan'])) {
 
 	$sql_simpan = "INSERT INTO rencana_kunjungan (id_karyawan, tujuan_daerah, t_berangkat, t_pulang, 
-	keberangkatan, bbm, penginapan, makan, tiket_berangkat, tiket_pulang, t_dibuat, keterangan) VALUES (
+	keberangkatan, bbm, penginapan, makan, lainnya, tiket_berangkat, tiket_pulang, t_dibuat, keterangan) VALUES (
            '" . $_POST['id_karyawan'] . "',
           '" . $_POST['tujuan_daerah'] . "',
           '" . $_POST['t_berangkat'] . "',
@@ -137,6 +142,7 @@ if (isset($_POST['Simpan'])) {
 		  '" . $_POST['bbm'] . "',
 		  '" . $_POST['penginapan'] . "',
 		  '" . $_POST['makan'] . "',
+		  '" . $_POST['lainnya'] . "',
 		  '" . $_POST['tiket_berangkat'] . "',
 		  '" . $_POST['tiket_pulang'] . "',
           '" . $_POST['t_dibuat'] . "',

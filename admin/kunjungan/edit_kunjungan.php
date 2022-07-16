@@ -106,8 +106,13 @@ if (isset($_GET['kode'])) {
 						</div>
 
 						<div class="form-group">
-							<label> Makan dan biaya lain – lain</label>
+							<label>Konsumsi</label>
 							<input type="number" name="makan" id="makan" class="form-control" value="<?php echo $data_cek['makan']?>">
+						</div>
+
+						<div class="form-group">
+							<label>Lainnya</label>
+							<input type="number" name="lainnya" id="lainnya" class="form-control" value="<?php echo $data_cek['lainnya']?>">
 						</div>
 
 						<div class="form-group">
@@ -155,6 +160,7 @@ if (isset($_POST['Ubah'])) {
 		bbm='" . $_POST['bbm'] . "',
 		penginapan='" . $_POST['penginapan'] . "',
 		makan='" . $_POST['makan'] . "',
+		lainnya='" . $_POST['lainnya'] . "',
 		tiket_berangkat='" . $_POST['tiket_berangkat'] . "',
 		tiket_pulang='" . $_POST['tiket_pulang'] . "',
         t_dibuat='" . $_POST['t_dibuat'] . "',
