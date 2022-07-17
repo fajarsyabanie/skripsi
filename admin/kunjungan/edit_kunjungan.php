@@ -132,7 +132,7 @@ if (isset($_GET['kode'])) {
 
 						<div class="form-group">
 							<label>Keterangan</label>
-							<input type="text" name="keterangan" id="keterangan" class="form-control" value="<?php echo $data_cek['t_dibuat']?>">
+							<input type="text" name="keterangan" id="keterangan" class="form-control" value="<?php echo $data_cek['keterangan']?>">
 						</div>
 
 					</div>
