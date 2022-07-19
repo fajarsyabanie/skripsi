@@ -10,7 +10,7 @@
 <section class="content-header">
 	<h1>
 		Laporan
-		<small>Mutasi Kas Kecil</small>
+		<small>Arus Kas Keluar</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
@@ -25,8 +25,8 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_mutasi" title="Tambah Data" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Mutasi</a>
+			<a href="?page=MyApp/add_kunjungan" title="Tambah Data" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Arus Kas Keluar</a>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse">
 					<i class="fa fa-minus"></i>
@@ -43,11 +43,9 @@
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Nama Karyawan</th>
-							<th>Tanggal Bongkaran</th>
-							<th>Container</th>
-							<th>Jumlah Pengajuan</th>
-							<th>Uang Muka</th>
+							<th>Perwakilan</th>
+							<th>Periode</th>
+							<th>Total</th>
 							<th>Kelola</th>
 						</tr>
 					</thead>
@@ -55,8 +53,9 @@
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-				  tanggal_bongkaran DESC");
+						$sql = $koneksi->query("SELECT R.*, K.nama from rencana_kunjungan R 
+						INNER JOIN karyawan K ON R.id_karyawan = K.nik ORDER BY 
+				  		t_dibuat DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
@@ -68,23 +67,17 @@
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo $data['tanggal_bongkaran']; ?>
+									<?php echo $data['tujuan_daerah']; ?>
 								</td>
 								<td>
-									<?php echo $data['container']; ?>
-								</td>
-								<td>
-									<?php echo $data['sewa_mobil']+$data['konsumsi']+$data['forklift']+$data['ekspedisi']+$data['tol']+$data['lainnya']; ?>
-								</td>
-								<td>
-									<?php echo $data['uang_muka']; ?>
+									<?php echo date('d M Y',strtotime($data['t_berangkat'])) ,' - ',  date('d M Y',strtotime($data['t_pulang']));?> 
 								</td>
 
 								<td>
-									<a href="?page=MyApp/edit_bongkaran&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyApp/edit_kunjungan&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/del_bongkaran&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="?page=MyApp/del_kunjungan&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
 							</tr>

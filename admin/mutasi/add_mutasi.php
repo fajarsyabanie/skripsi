@@ -1,13 +1,13 @@
 <section class="content-header">
 	<h1>
-		Pengajuan
-		<small>Bongkaran</small>
+		Laporan
+		<small>Arus Kas Keluar</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi Keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -19,7 +19,7 @@
 			<!-- general form elements -->
 			<div class="box box-info">
 				<div class="box-header with-border">
-					<h3 class="box-title">Tambah Pengajuan Bongkaran</h3>
+					<h3 class="box-title">Tambah Laporan</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
