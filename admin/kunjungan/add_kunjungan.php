@@ -1,3 +1,5 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
 <section class="content-header">
 	<h1>
 		Pengajuan
@@ -56,12 +58,12 @@
 							<label>Tujuan Daerah</label>
 							<input type="text" name="tujuan_daerah" id="tujuan_daerah" class="form-control" placeholder="Tujuan Daerah Kunjungan">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tanggal Berangkat</label>
 							<input type="date" name="t_berangkat" id="t_berangkat" class="form-control" placeholder="Tanggal Berangkat">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tanggal Pulang</label>
 							<input type="date" name="t_pulang" id="t_pulang" class="form-control" placeholder="Tanggal Pulang">
@@ -101,7 +103,7 @@
 							<label>Tiket Berangkat</label>
 							<input type="number" name="tiket_berangkat" id="tiket_berangkat" class="form-control" placeholder="Tiket Berangkat">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tiket Pulang</label>
 							<input type="number" name="tiket_pulang" id="tiket_pulang" class="form-control" placeholder="Tiket Berangkat">
@@ -117,6 +119,44 @@
 							<input type="text" name="keterangan" id="keterangan" class="form-control" placeholder="Keterangan">
 						</div>
 
+
+
+						<h4 class="box-title box-footer">Rincian Perjalanan</h4>
+						<div class="control-group after-add-more">
+							<div class="form-group col-sm-6">
+								<label>Tanggal Kegiatan</label>
+								<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
+							</div>
+							<div class="form-group col-sm-6">
+								<label>Rincian</label>
+								<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+							</div>
+						</div>
+						<br>
+						<button class="btn btn-success add-more" type="button">
+							<i class="glyphicon glyphicon-plus"></i> Add
+						</button>
+
+
+						<!-- hide -->
+
+						<div class="copy hide">
+							<div class="control-group ">
+								<div class="form-group col-sm-6">
+									<label>Tanggal Kegiatan</label>
+									<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
+								</div>
+								<div class="form-group col-sm-6">
+									<label>Rincian</label>
+									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+								</div>
+
+								<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+
+							</div>
+
+						</div>
+
 						<!-- /.box-body -->
 
 						<div class="box-footer">
@@ -125,6 +165,19 @@
 						</div>
 				</form>
 			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$(".add-more").click(function() {
+						var html = $(".copy").html();
+						$(".after-add-more").after(html);
+					});
+
+					// saat tombol remove dklik control group akan dihapus 
+					$("body").on("click", ".remove", function() {
+						$(this).parents(".control-group").remove();
+					});
+				});
+			</script>
 			<!-- /.box -->
 </section>
 
@@ -148,7 +201,26 @@ if (isset($_POST['Simpan'])) {
           '" . $_POST['t_dibuat'] . "',
           '" . $_POST['keterangan'] . "')";
 	$query_simpan = mysqli_query($koneksi, $sql_simpan);
-	mysqli_close($koneksi);
+	
+	$id_terakhir = mysqli_insert_id($koneksi);
+
+	 //memasukkan data ke array
+	 $id_kunjungan       = $id_terakhir;
+	 $t_kunjungan         = $_POST['t_kunjungan'];
+	 $rincian     = $_POST['rincian'];
+	
+	 $jumlah_data = $_POST['t_kunjungan'];
+	for($i=0; $i<sizeof($jumlah_data)-1; $i++){
+
+        mysqli_query($koneksi, "INSERT INTO kunjungan_rincian SET
+			id_kunjungan = $id_kunjungan,
+            t_kunjungan    = '$t_kunjungan[$i]',
+            rincian      = '$rincian[$i]'
+        ");
+    }
+	
+	// mysqli_close($koneksi);
+
 
 	if ($query_simpan) {
 
