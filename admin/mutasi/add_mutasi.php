@@ -1,3 +1,5 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
 <section class="content-header">
 	<h1>
 		Laporan
@@ -53,62 +55,99 @@
 						</div>
 
 						<div class="form-group">
-							<label>Tanggal Bongkaran</label>
-							<input type="date" name="tanggal_bongkaran" id="tanggal_bongkaran" class="form-control" />
-						</div>
-
-						<div class="form-group">
-							<label>Container</label>
-							<select name="container" id="container" class="form-control" required>
-								<option>-- Pilih Jenis Container --</option>
-								<option>20 feet</option>
-								<option>40 feet</option>
+							<label>Kantor Perwakilan</label>
+							<select name="id_cabang" id="id_cabang" class="form-control select2" style="width: 100%;">
+								<option selected="selected">-- Pilih Perwakilan --</option>
+								<?php
+								// ambil data dari database
+								$query = "select * from perwakilan ";
+								$hasil = mysqli_query($koneksi, $query);
+								while ($row = mysqli_fetch_array($hasil)) {
+								?>
+									<option value="<?php echo $row['id'] ?>">
+										<?php echo $row['nama_perwakilan'] ?>
+									</option>
+								<?php
+								}
+								?>
 							</select>
 						</div>
 
-						<div class="form-group">
-							<label>Sewa Mobil</label>
-							<input type="number" name="sewa_mobil" id="sewa_mobil" class="form-control" placeholder="Sewa Mobil">
+
+
+						<div class="form-group col-md-6">
+							<label>Dari Tanggal</label>
+							<input type="date" name="t_awal" id="t_awal" class="form-control">
+						</div>
+						<div class="form-group col-md-6">
+							<label>Sampai Tanggal</label>
+							<input type="date" name="t_akhir" id="t_akhir" class="form-control">
 						</div>
 
-						<div class="form-group">
-							<label>Makan & Minum</label>
-							<input type="number" name="konsumsi" id="konsumsi" class="form-control" placeholder="Makan & Minum">
-						</div>
+						<div class="control-group after-add-more">
+							<div class="form-group">
+								<label>Rincian</label>
+								<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Nota">
+							</div>
+							<div class="form-group col-sm-6">
+								<label>Tanggal Nota</label>
+								<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota">
+							</div>
 
-						<div class="form-group">
-							<label>Sewa Forklift</label>
-							<input type="number" name="forklift" id="forklift" class="form-control" placeholder="Sewa Forklift">
+							<div class="form-group col-sm-6">
+								<label>Harga</label>
+								<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga">
+							</div>
 						</div>
+						<br>
+						<button class="btn btn-success add-more" type="button">
+							<i class="glyphicon glyphicon-plus"></i> Add
+						</button>
 
-						<div class="form-group">
-							<label>Ekspedisi</label>
-							<input type="number" name="ekspedisi" id="ekspedisi" class="form-control" placeholder="Ekspedisi">
+
+						<!-- hide -->
+
+						<div class="copy hide">
+							<div class="control-group ">
+								<div class="form-group">
+									<label>Rincian</label>
+									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Nota">
+								</div>
+								<div class="form-group col-sm-6">
+									<label>Tanggal Nota</label>
+									<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota">
+								</div>
+
+								<div class="form-group col-sm-6">
+									<label>Harga</label>
+									<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga">
+								</div>
+
+								<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+
+							</div>
 						</div>
-
-						<div class="form-group">
-							<label>Parkir & Tol</label>
-							<input type="number" name="tol" id="tol" class="form-control" placeholder="Parkir & Tol">
-						</div>
-
-						<div class="form-group">
-							<label>Lain-lain</label>
-							<input type="number" name="lainnya" id="lainnya" class="form-control" placeholder="Lain-lain">
-						</div>
-
-						<div class="form-group">
-							<label>Uang Muka</label>
-							<input type="number" name="uang_muka" id="uang_muka" class="form-control" placeholder="Lain-lain">
-						</div>
-
 						<!-- /.box-body -->
 
 						<div class="box-footer">
 							<input type="submit" name="Simpan" value="Simpan" class="btn btn-info">
-							<a href="?page=MyApp/data_bongkaran" class="btn btn-warning">Batal</a>
+							<a href="?page=MyApp/data_mutasi" class="btn btn-warning">Batal</a>
 						</div>
 				</form>
 			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$(".add-more").click(function() {
+						var html = $(".copy").html();
+						$(".after-add-more").after(html);
+					});
+
+					// saat tombol remove dklik control group akan dihapus 
+					$("body").on("click", ".remove", function() {
+						$(this).parents(".control-group").remove();
+					});
+				});
+			</script>
 			<!-- /.box -->
 </section>
 
@@ -116,20 +155,33 @@
 
 if (isset($_POST['Simpan'])) {
 
-	$sql_simpan = "INSERT INTO bongkaran (id_karyawan, tanggal_bongkaran, container, sewa_mobil, 
-	konsumsi, forklift, ekspedisi, tol, lainnya, uang_muka) VALUES (
-           '" . $_POST['id_karyawan'] . "',
-          '" . $_POST['tanggal_bongkaran'] . "',
-          '" . $_POST['container'] . "',
-          '" . $_POST['sewa_mobil'] . "',
-          '" . $_POST['konsumsi'] . "',
-		  '" . $_POST['forklift'] . "',
-		  '" . $_POST['ekspedisi'] . "',
-		  '" . $_POST['tol'] . "',
-		  '" . $_POST['lainnya'] . "',
-          '" . $_POST['uang_muka'] . "')";
+	$sql_simpan = "INSERT INTO mutasi (id_cabang, id_karyawan, t_awal, t_akhir) VALUES (
+           '" . $_POST['id_cabang'] . "',
+          '" . $_POST['id_karyawan'] . "',
+          '" . $_POST['t_awal'] . "',
+          '" . $_POST['t_akhir'] . "')";
 	$query_simpan = mysqli_query($koneksi, $sql_simpan);
-	mysqli_close($koneksi);
+
+
+	$id_terakhir = mysqli_insert_id($koneksi);
+
+	//memasukkan data ke array
+	$id_mutasi       = $id_terakhir;
+	$tanggal         = $_POST['tanggal'];
+	$rincian     = $_POST['rincian'];
+	$biaya     = $_POST['biaya'];
+
+	$jumlah_data = $_POST['tanggal'];
+	for ($i = 0; $i < sizeof($jumlah_data) - 1; $i++) {
+
+		mysqli_query($koneksi, "INSERT INTO mutasi_rinci SET
+			id_mutasi = $id_mutasi,
+            tanggal    = '$tanggal[$i]',
+            rincian      = '$rincian[$i]',
+            biaya      = '$biaya[$i]'
+        ");
+	}
+	//mysqli_close($koneksi);
 
 	if ($query_simpan) {
 
@@ -137,7 +189,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/data_bongkaran';
+              window.location = 'index.php?page=MyApp/data_mutasi';
           }
       })</script>";
 	} else {
@@ -145,7 +197,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/add_bongkaran';
+              window.location = 'index.php?page=MyApp/add_mutasi';
           }
       })</script>";
 	}
