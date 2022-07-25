@@ -2,12 +2,8 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM bongkaran WHERE id='" . $_GET['kode'] . "'";
-	$query_cek = mysqli_query($koneksi, $sql_cek);
-	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-}
-
+$siswa = mysqli_query($koneksi, "SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
+tanggal_bongkaran DESC");
 
 
 $mpdf = new \Mpdf\Mpdf();
@@ -50,14 +46,14 @@ $html = '
         <th>Uang Muka</th>
     </tr> ';
     $i = 1;
-    foreach( $data_cek as $data) {
+    foreach( $siswa as $row) {
         $html .= '<tr>
         <td align="center">'. $i++ .'</td>
-        <td align="center">'. $data["nama"].'</td>
-        <td align="center">'. $data["tanggal_bongkaran"].'</td>
-        <td align="center">'. $data["container"].'</td>
-        <td align="center">'. $data["sewa_mobil"]+$data["konsumsi"]+$data["forklift"]+$data["ekspedisi"]+$data["tol"]+$data["lainnya"].'</td>
-        <td align="center">'. $data["uang_muka"].'</td>
+        <td align="center">'. $row["nama"].'</td>
+        <td align="center">'. $row["tanggal_bongkaran"].'</td>
+        <td align="center">'. $row["container"].'</td>
+        <td align="center">'. $row["sewa_mobil"]+$row["konsumsi"]+$row["forklift"]+$row["ekspedisi"]+$row["tol"]+$row["lainnya"].'</td>
+        <td align="center">'. $row["uang_muka"].'</td>
         </tr>';
     }
 

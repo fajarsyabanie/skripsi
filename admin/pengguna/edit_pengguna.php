@@ -76,8 +76,14 @@
                             if ($data_cek['level'] == "Administrator") echo "<option value='Administrator' selected>Administrator</option>";
                             else echo "<option value='Administrator'>Administrator</option>";
 
-                            if ($data_cek['level'] == "Petugas") echo "<option value='Petugas' selected>Petugas</option>";
-                            else echo "<option value='Petugas'>Petugas</option>";
+                            if ($data_cek['level'] == "Pimpinan") echo "<option value='Pimpinan' selected>Pimpinan</option>";
+                            else echo "<option value='Pimpinan'>Pimpinan</option>";
+
+                            if ($data_cek['level'] == "Sales") echo "<option value='Sales' selected>Sales</option>";
+                            else echo "<option value='Sales'>Sales</option>";
+
+                            if ($data_cek['level'] == "Admin Gudang") echo "<option value='Admin Gudang' selected>Admin Gudang</option>";
+                            else echo "<option value='Admin Gudang'>Admin Gudang</option>";
         
                         ?>
 							</select>

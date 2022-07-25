@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM dinas WHERE id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM entertaiment WHERE id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }
@@ -9,14 +9,14 @@ if (isset($_GET['kode'])) {
 
 <section class="content-header">
 	<h1>
-		Pengajuan
-		<small>Bongkaran</small>
+		Data
+		<small>Formulir Entertaiment</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi Keuangan PT Total Sarana Mandiri Cabang Banjarmasin</b>
 			</a>
 		</li>
 	</ol>
@@ -25,8 +25,8 @@ if (isset($_GET['kode'])) {
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_bongkaran" title="Tambah Data" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Bongkaran</a>
+			<a href="?page=MyApp/add_entertaiment" title="Tambah Data" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i> Buat Formulir Entertaiment</a>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse">
 					<i class="fa fa-minus"></i>
@@ -44,9 +44,14 @@ if (isset($_GET['kode'])) {
 						<tr>
 							<th>No</th>
 							<th>Nama Karyawan</th>
-							<th>Tanggal Bongkaran</th>
-							<th>Container</th>
-							<th>Jumlah Pengajuan</th>
+							<th>Tanggal</th>
+							<th>Kegiatan</th>
+							<th>Nama Tempat</th>
+							<th>Alamat</th>
+							<th>Jumlah</th>
+							<th>Nama Relasi</th>
+							<th>Posisi</th>
+							<th>Nama Perusahaan</th>
 							<th>Kelola</th>
 						</tr>
 					</thead>
@@ -54,8 +59,8 @@ if (isset($_GET['kode'])) {
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-				  tanggal_bongkaran DESC");
+						$sql = $koneksi->query("SELECT E.*, K.nama from entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik ORDER BY 
+				  tanggal DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
@@ -67,25 +72,36 @@ if (isset($_GET['kode'])) {
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y', strtotime($data['tanggal_bongkaran'])); ?>
+									<?php echo date('l,d M Y',strtotime($data['tanggal'])); ?>
 								</td>
 								<td>
-									<?php echo $data['container']; ?>
+									<?php echo $data['jenis']; ?>
 								</td>
 								<td>
-									<?php echo 'Rp ', number_format($data['sewa_mobil'] + $data['konsumsi'] + $data['forklift'] + $data['ekspedisi'] + $data['tol'] + $data['lainnya']); ?>
+									<?php echo $data['nama_tempat']; ?>
+								</td>
+								<td>
+									<?php echo $data['alamat']; ?>
+								</td>
+								<td>
+									<?php echo $data['jumlah'], ' Orang' ?>
+								</td>
+								<td>
+									<?php echo $data['nama_relasi'] ?>
+								</td>
+								<td>
+									<?php echo $data['posisi_relasi'] ?>
+								</td>
+								<td>
+									<?php echo $data['perusahaan_relasi'] ?>
 								</td>
 
 								<td>
-									<a href="?page=MyApp/edit_bongkaran&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyApp/edit_entertaiment&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/print_bongkaran&kode=<?php echo $data['id']; ?>" title="Print" class="btn btn-success">
-										<i class="glyphicon glyphicon-print"></i>
-									</a>
-									<a href="?page=MyApp/del_bongkaran&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="?page=MyApp/del_entertaiment&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
-									</a>
 								</td>
 							</tr>
 						<?php

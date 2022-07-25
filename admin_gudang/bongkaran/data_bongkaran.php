@@ -1,10 +1,10 @@
 <?php
 
-if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM dinas WHERE id='" . $_GET['kode'] . "'";
-	$query_cek = mysqli_query($koneksi, $sql_cek);
-	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-}
+    if(isset($_GET['kode'])){
+        $sql_cek = "SELECT * FROM dinas WHERE id='".$_GET['kode']."'";
+        $query_cek = mysqli_query($koneksi, $sql_cek);
+        $data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
+    }
 ?>
 
 <section class="content-header">
@@ -67,25 +67,21 @@ if (isset($_GET['kode'])) {
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y', strtotime($data['tanggal_bongkaran'])); ?>
+									<?php echo date('l,d M Y',strtotime($data['tanggal_bongkaran'])); ?>
 								</td>
 								<td>
 									<?php echo $data['container']; ?>
 								</td>
 								<td>
-									<?php echo 'Rp ', number_format($data['sewa_mobil'] + $data['konsumsi'] + $data['forklift'] + $data['ekspedisi'] + $data['tol'] + $data['lainnya']); ?>
+									<?php echo 'Rp ', number_format( $data['sewa_mobil']+$data['konsumsi']+$data['forklift']+$data['ekspedisi']+$data['tol']+$data['lainnya'] );?>
 								</td>
 
 								<td>
 									<a href="?page=MyApp/edit_bongkaran&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/print_bongkaran&kode=<?php echo $data['id']; ?>" title="Print" class="btn btn-success">
-										<i class="glyphicon glyphicon-print"></i>
-									</a>
 									<a href="?page=MyApp/del_bongkaran&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
-									</a>
 								</td>
 							</tr>
 						<?php

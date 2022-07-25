@@ -147,7 +147,7 @@ include "inc/koneksi.php";
 									<a href="?page=MyApp/data_dinas">
 										<i class="fas fa-car"></i>Perjalanan Dinas</a>
 								</li>
-								
+
 								<li>
 									<a href="?page=MyApp/data_entertaiment">
 										<i class="fas fa-music"></i> Data Entertaiment</a>
@@ -251,7 +251,7 @@ include "inc/koneksi.php";
 						</li>
 
 					<?php
-					} elseif ($data_level == "Karyawan") {
+					} elseif ($data_level == "Sales") {
 					?>
 
 						<li class="treeview">
@@ -263,13 +263,61 @@ include "inc/koneksi.php";
 							</a>
 						</li>
 
+						<li>
+							<a href="?page=MyAppSales/data_dinas">
+								<i class="fas fa-car"></i>Perjalanan Dinas</a>
+						</li>
+
+						<li>
+							<a href="?page=MyAppSales/data_entertaiment">
+								<i class="fas fa-music"></i> Data Entertaiment</a>
+						</li>
+
+						<li>
+							<a href="?page=MyAppSales/data_kunjungan">
+								<i class="fas fa-car"></i> Rencana Kunjungan</a>
+						</li>
+
+
+						
+
+
+
+					<?php
+
+					} elseif ($data_level == "Pimpinan") {
+					?>
+
 						<li class="treeview">
-							<a href="?page=karyawan/data_absensi">
-								<i class="fas fa-fingerprint"></i>
-								<span>Absensi</span>
+							<a href="?page=karyawan">
+								<i class="fa fa-dashboard"></i>
+								<span>Dashboard</span>
 								<span class="pull-right-container">
 								</span>
 							</a>
+						</li>
+
+						
+
+
+
+					<?php
+
+					} elseif ($data_level == "Admin Gudang") {
+					?>
+
+						<li class="treeview">
+							<a href="?page=karyawan">
+								<i class="fa fa-dashboard"></i>
+								<span>Dashboard</span>
+								<span class="pull-right-container">
+								</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="?page=MyAppGudang/data_bongkaran">
+								<i class="fa fa-truck"></i>Bongkaran</a>
 						</li>
 
 
@@ -368,6 +416,23 @@ include "inc/koneksi.php";
 						case 'MyApp/del_bongkaran':
 							include "admin/bongkaran/del_bongkaran.php";
 							break;
+						case 'MyApp/print_bongkaran':
+							include "admin/bongkaran/print_bongkaran.php";
+							break;
+
+							//bongkaran admin gudang
+						case 'MyAppGudang/data_bongkaran':
+							include "admin_gudang/bongkaran/data_bongkaran.php";
+							break;
+						case 'MyAppGudang/add_bongkaran':
+							include "admin_gudang/bongkaran/add_bongkaran.php";
+							break;
+						case 'MyAppGudang/edit_bongkaran':
+							include "admin_gudang/bongkaran/edit_bongkaran.php";
+							break;
+						case 'MyAppGudang/del_bongkaran':
+							include "admin_gudang/bongkaran/del_bongkaran.php";
+							break;
 
 							//dinas
 						case 'MyApp/data_dinas':
@@ -383,7 +448,21 @@ include "inc/koneksi.php";
 							include "admin/dinas/del_dinas.php";
 							break;
 
-							
+							//dinas sales
+						case 'MyAppSales/data_dinas':
+							include "sales/dinas/data_dinas.php";
+							break;
+						case 'MyAppSales/add_dinas':
+							include "sales/dinas/add_dinas.php";
+							break;
+						case 'MyAppSales/edit_dinas':
+							include "sales/dinas/edit_dinas.php";
+							break;
+						case 'MyAppSales/del_dinas':
+							include "sales/dinas/del_dinas.php";
+							break;
+
+
 
 							//bensin
 						case 'MyApp/data_bensin':
@@ -413,6 +492,20 @@ include "inc/koneksi.php";
 							include "admin/kunjungan/del_kunjungan.php";
 							break;
 
+							//kunjungan sales
+						case 'MyAppSales/data_kunjungan':
+							include "sales/kunjungan/data_kunjungan.php";
+							break;
+						case 'MyAppSales/add_kunjungan':
+							include "sales/kunjungan/add_kunjungan.php";
+							break;
+						case 'MyAppSales/edit_kunjungan':
+							include "sales/kunjungan/edit_kunjungan.php";
+							break;
+						case 'MyAppSales/del_kunjungan':
+							include "sales/kunjungan/del_kunjungan.php";
+							break;
+
 							//entertaiment
 						case 'MyApp/data_entertaiment':
 							include "admin/entertaiment/data_entertaiment.php";
@@ -425,6 +518,20 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/del_entertaiment':
 							include "admin/entertaiment/del_entertaiment.php";
+							break;
+
+							//entertaiment sales
+						case 'MyAppSales/data_entertaiment':
+							include "sales/entertaiment/data_entertaiment.php";
+							break;
+						case 'MyAppSales/add_entertaiment':
+							include "sales/entertaiment/add_entertaiment.php";
+							break;
+						case 'MyAppSales/edit_entertaiment':
+							include "sales/entertaiment/edit_entertaiment.php";
+							break;
+						case 'MyAppSales/del_entertaiment':
+							include "sales/entertaiment/del_entertaiment.php";
 							break;
 
 							//mutasi
@@ -467,8 +574,12 @@ include "inc/koneksi.php";
 					// Auto Halaman Home Pengguna
 					if ($data_level == "Administrator") {
 						include "home/admin.php";
-					} elseif ($data_level == "karyawan") {
-						include "home/karyawan.php";
+					} elseif ($data_level == "Admin Gudang") {
+						include "home/admin_gudang.php";
+					} elseif ($data_level == "Pimpinan") {
+						include "home/pimpinan.php";
+					} elseif ($data_level == "Sales") {
+						include "home/sales.php";
 					}
 				}
 				?>

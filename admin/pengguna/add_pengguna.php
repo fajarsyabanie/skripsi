@@ -55,7 +55,9 @@
 							<select name="level" id="level" class="form-control">
 								<option>-- Pilih Level --</option>
 								<option>Administrator</option>
-								<option>Karyawan</option>
+								<option>Pimpinan</option>
+								<option>Sales</option>
+								<option>Admin Gudang</option>
 							</select>
 						</div>
 

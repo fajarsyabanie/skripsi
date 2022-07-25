@@ -1,10 +1,10 @@
 <?php
 
-    if(isset($_GET['kode'])){
-        $sql_cek = "SELECT * FROM mutasi WHERE id='".$_GET['kode']."'";
-        $query_cek = mysqli_query($koneksi, $sql_cek);
-        $data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
-    }
+if (isset($_GET['kode'])) {
+	$sql_cek = "SELECT * FROM mutasi WHERE id='" . $_GET['kode'] . "'";
+	$query_cek = mysqli_query($koneksi, $sql_cek);
+	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+}
 ?>
 
 <section class="content-header">
@@ -53,7 +53,7 @@
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT M.*, K.nama, P.nama_perwakilan FROM mutasi M INNER JOIN karyawan K on M.id_karyawan = K.id INNER JOIN perwakilan P on M.id_cabang = P.id");
+						$sql = $koneksi->query("SELECT M.*, K.nama, P.nama_perwakilan FROM mutasi M INNER JOIN karyawan K on M.id_karyawan = K.nik INNER JOIN perwakilan P on M.id_cabang = P.id");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
@@ -68,15 +68,19 @@
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo date('d M Y',strtotime($data['t_awal'])) ,' - ',  date('d M Y',strtotime($data['t_akhir']));?> 
+									<?php echo date('d M Y', strtotime($data['t_awal'])), ' - ',  date('d M Y', strtotime($data['t_akhir'])); ?>
 								</td>
 
 								<td>
 									<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
+									<a href="?page=MyApp/print_mutasi&kode=<?php echo $data['id']; ?>" title="Print" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
+									</a>
 									<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
+									</a>
 								</td>
 							</tr>
 						<?php
