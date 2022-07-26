@@ -93,14 +93,16 @@ if (isset($_GET['kode'])) {
 									<label>Rincian</label>
 									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Nota" value="<?= $data_cek2['rincian'] ?>">
 								</div>
-								<div class="form-group col-sm-6">
-									<label>Tanggal Nota</label>
-									<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota" value="<?= $data_cek2['tanggal'] ?>">
-								</div>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Tanggal Nota</label>
+										<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota" value="<?= $data_cek2['tanggal'] ?>">
+									</div>
 
-								<div class="form-group col-sm-6">
-									<label>Harga</label>
-									<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga" value="<?= $data_cek2['biaya'] ?>">
+									<div class="form-group col-sm-6">
+										<label>Harga</label>
+										<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga" value="<?= $data_cek2['biaya'] ?>">
+									</div>
 								</div>
 							<?php } ?>
 						</div>
@@ -117,14 +119,16 @@ if (isset($_GET['kode'])) {
 									<label>Rincian</label>
 									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Nota">
 								</div>
-								<div class="form-group col-sm-6">
-									<label>Tanggal Nota</label>
-									<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota">
-								</div>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Tanggal Nota</label>
+										<input type="date" name="tanggal[]" id="tanggal" class="form-control" placeholder="Tanggal Nota">
+									</div>
 
-								<div class="form-group col-sm-6">
-									<label>Harga</label>
-									<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga">
+									<div class="form-group col-sm-6">
+										<label>Harga</label>
+										<input type="text" name="biaya[]" id="biaya" class="form-control" placeholder="Harga">
+									</div>
 								</div>
 
 								<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -161,25 +165,37 @@ if (isset($_GET['kode'])) {
 
 if (isset($_POST['Ubah'])) {
 	//mulai proses ubah
-	$sql_ubah = "UPDATE bongkaran SET
-		tanggal_bongkaran='" . $_POST['tanggal_bongkaran'] . "',
-		container='" . $_POST['container'] . "',
-		sewa_mobil='" . $_POST['sewa_mobil'] . "',
-		konsumsi='" . $_POST['konsumsi'] . "',
-		forklift='" . $_POST['forklift'] . "',
-		ekspedisi='" . $_POST['ekspedisi'] . "',
-		tol='" . $_POST['tol'] . "',
-		lainnya='" . $_POST['lainnya'] . "',
-        uang_muka='" . $_POST['uang_muka'] . "'
+	$sql_ubah = "UPDATE mutasi SET
+		id_karyawan='" . $_POST['id_karyawan'] . "',
+		id_cabang='" . $_POST['id_cabang'] . "',
+		t_awal='" . $_POST['t_awal'] . "',
+		t_akhir='" . $_POST['t_akhir'] . "'
         WHERE id='" . $_GET['kode'] . "'";
 	$query_ubah = mysqli_query($koneksi, $sql_ubah);
+	
+	//memasukkan data ke array
+	$id_mutasi       = $_GET['kode'];
+	$tanggal         = $_POST['tanggal'];
+	$rincian     = $_POST['rincian'];
+	$biaya     = $_POST['biaya'];
 
-	if ($query_ubah) {
+	$jumlah_data = $_POST['tanggal'];
+	for ($i = 0; $i < sizeof($jumlah_data) - 1; $i++) {
+
+		$query_ubah2 = mysqli_query($koneksi, "UPDATE mutasi_rinci SET
+			id_mutasi = $id_mutasi,
+            tanggal    = '$tanggal[$i]',
+            rincian      = '$rincian[$i]',
+            biaya      = '$biaya[$i]'
+        ");
+	}
+
+	if ($query_ubah & $query_ubah2) {
 		echo "<script>
         Swal.fire({title: 'Ubah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_bongkaran';
+                window.location = 'index.php?page=MyApp/data_mutasi';
             }
         })</script>";
 	} else {
@@ -187,7 +203,7 @@ if (isset($_POST['Ubah'])) {
         Swal.fire({title: 'Ubah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_bongkaran';
+                window.location = 'index.php?page=MyApp/data_mutasi';
             }
         })</script>";
 	}

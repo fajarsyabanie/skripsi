@@ -43,7 +43,7 @@ if (isset($_GET['kode'])) {
 				<form action="" method="post" enctype="multipart/form-data">
 					<div class="box-body">
 
-					<div class="form-group">
+						<div class="form-group">
 							<label>Nama Karyawan</label>
 							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
 								<option selected="selected">-- Pilih Nama Karyawan --</option>
@@ -64,17 +64,17 @@ if (isset($_GET['kode'])) {
 
 						<div class="form-group">
 							<label>Tujuan Daerah</label>
-							<input type="text" name="tujuan_daerah" id="tujuan_daerah" class="form-control" value="<?php echo $data_cek['tujuan_daerah']?>">
+							<input type="text" name="tujuan_daerah" id="tujuan_daerah" class="form-control" value="<?php echo $data_cek['tujuan_daerah'] ?>">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tanggal Berangkat</label>
-							<input type="date" name="t_berangkat" id="t_berangkat" class="form-control" value="<?php echo $data_cek['t_berangkat']?>">
+							<input type="date" name="t_berangkat" id="t_berangkat" class="form-control" value="<?php echo $data_cek['t_berangkat'] ?>">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tanggal Pulang</label>
-							<input type="date" name="t_pulang" id="t_pulang" class="form-control" value="<?php echo $data_cek['t_pulang']?>">
+							<input type="date" name="t_pulang" id="t_pulang" class="form-control" value="<?php echo $data_cek['t_pulang'] ?>">
 						</div>
 
 						<div class="form-group">
@@ -97,53 +97,109 @@ if (isset($_GET['kode'])) {
 
 						<div class="form-group">
 							<label>Biaya Bahan Bakar</label>
-							<input type="number" name="bbm" id="bbm" class="form-control" value="<?php echo $data_cek['bbm']?>">
+							<input type="number" name="bbm" id="bbm" class="form-control" value="<?php echo $data_cek['bbm'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Penginapan</label>
-							<input type="number" name="penginapan" id="penginapan" class="form-control" value="<?php echo $data_cek['penginapan']?>">
+							<input type="number" name="penginapan" id="penginapan" class="form-control" value="<?php echo $data_cek['penginapan'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Konsumsi</label>
-							<input type="number" name="makan" id="makan" class="form-control" value="<?php echo $data_cek['makan']?>">
+							<input type="number" name="makan" id="makan" class="form-control" value="<?php echo $data_cek['makan'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Lainnya</label>
-							<input type="number" name="lainnya" id="lainnya" class="form-control" value="<?php echo $data_cek['lainnya']?>">
+							<input type="number" name="lainnya" id="lainnya" class="form-control" value="<?php echo $data_cek['lainnya'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Tiket Berangkat</label>
-							<input type="number" name="tiket_berangkat" id="tiket_berangkat" class="form-control" value="<?php echo $data_cek['tiket_berangkat']?>">
+							<input type="number" name="tiket_berangkat" id="tiket_berangkat" class="form-control" value="<?php echo $data_cek['tiket_berangkat'] ?>">
 						</div>
-						
+
 						<div class="form-group">
 							<label>Tiket Pulang</label>
-							<input type="number" name="tiket_pulang" id="tiket_pulang" class="form-control" value="<?php echo $data_cek['tiket_pulang']?>">
+							<input type="number" name="tiket_pulang" id="tiket_pulang" class="form-control" value="<?php echo $data_cek['tiket_pulang'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Tanggal Dibuat</label>
-							<input type="date" name="t_dibuat" id="t_dibuat" class="form-control" value="<?php echo $data_cek['t_dibuat']?>">
+							<input type="date" name="t_dibuat" id="t_dibuat" class="form-control" value="<?php echo $data_cek['t_dibuat'] ?>">
 						</div>
 
 						<div class="form-group">
 							<label>Keterangan</label>
-							<input type="text" name="keterangan" id="keterangan" class="form-control" value="<?php echo $data_cek['keterangan']?>">
+							<input type="text" name="keterangan" id="keterangan" class="form-control" value="<?php echo $data_cek['keterangan'] ?>">
 						</div>
 
-					</div>
-					<!-- /.box-body -->
+						<h4 class="box-title box-footer">Rincian Perjalanan</h4>
+						<div class="control-group after-add-more">
+							<?php
+							$sql_cek2 = "SELECT * FROM kunjungan_rincian WHERE id_kunjungan='" . $_GET['kode'] . "'";
+							$query_cek2 = mysqli_query($koneksi, $sql_cek2);
+							while ($data_cek2 = mysqli_fetch_assoc($query_cek2)) { ?>
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Tanggal Kegiatan</label>
+										<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan" value="<?= $data_cek2['t_kunjungan'] ?>">
+									</div>
+									<div class="form-group col-sm-6">
+										<label>Rincian</label>
+										<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan" value="<?= $data_cek2['rincian'] ?>">
+									</div>
+								</div>
+							<?php } ?>
+						</div>
+						<br>
+						<button class="btn btn-success add-more" type="button">
+							<i class="glyphicon glyphicon-plus"></i> Add
+						</button>
 
-					<div class="box-footer">
-						<input type="submit" name="Ubah" value="Ubah" class="btn btn-success">
-						<a href="?page=MyApp/data_kunjungan" class="btn btn-warning">Batal</a>
-					</div>
+
+						<!-- hide -->
+
+						<div class="copy hide">
+							<div class="control-group ">
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Tanggal Kegiatan</label>
+										<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
+									</div>
+									<div class="form-group col-sm-6">
+										<label>Rincian</label>
+										<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+									</div>
+								</div>
+
+								<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+
+							</div>
+
+						</div>
+						<!-- /.box-body -->
+
+						<div class="box-footer">
+							<input type="submit" name="Ubah" value="Ubah" class="btn btn-success">
+							<a href="?page=MyApp/data_kunjungan" class="btn btn-warning">Batal</a>
+						</div>
 				</form>
 			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$(".add-more").click(function() {
+						var html = $(".copy").html();
+						$(".after-add-more").after(html);
+					});
+
+					// saat tombol remove dklik control group akan dihapus 
+					$("body").on("click", ".remove", function() {
+						$(this).parents(".control-group").remove();
+					});
+				});
+			</script>
 			<!-- /.box -->
 </section>
 
