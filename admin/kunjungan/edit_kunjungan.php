@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM rencana_kunjungan WHERE id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM rencana_kunjungan R INNER JOIN karyawan K ON k.nik = R.id_karyawan WHERE R.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }
@@ -46,16 +46,14 @@ if (isset($_GET['kode'])) {
 						<div class="form-group">
 							<label>Nama Karyawan</label>
 							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih Nama Karyawan --</option>
 								<?php
 								// ambil data dari database
-								$query = "select * from karyawan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
 								?>
-									<option value="<?php echo $row['nik'] ?>">
-										<?php echo $row['nama'] ?>
-									</option>
 								<?php
 								}
 								?>
@@ -141,15 +139,18 @@ if (isset($_GET['kode'])) {
 							$sql_cek2 = "SELECT * FROM kunjungan_rincian WHERE id_kunjungan='" . $_GET['kode'] . "'";
 							$query_cek2 = mysqli_query($koneksi, $sql_cek2);
 							while ($data_cek2 = mysqli_fetch_assoc($query_cek2)) { ?>
-								<div class="row">
-									<div class="form-group col-sm-6">
-										<label>Tanggal Kegiatan</label>
-										<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan" value="<?= $data_cek2['t_kunjungan'] ?>">
+								<div class="control-group ">
+									<div class="row">
+										<div class="form-group col-sm-6">
+											<label>Tanggal Kegiatan</label>
+											<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan" value="<?= $data_cek2['t_kunjungan'] ?>">
+										</div>
+										<div class="form-group col-sm-6">
+											<label>Rincian</label>
+											<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan" value="<?= $data_cek2['rincian'] ?>">
+										</div>
 									</div>
-									<div class="form-group col-sm-6">
-										<label>Rincian</label>
-										<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan" value="<?= $data_cek2['rincian'] ?>">
-									</div>
+									<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
 								</div>
 							<?php } ?>
 						</div>
@@ -196,7 +197,7 @@ if (isset($_GET['kode'])) {
 
 					// saat tombol remove dklik control group akan dihapus 
 					$("body").on("click", ".remove", function() {
-						$(this).parents(".control-group").remove();
+						$(this).parent(".control-group").remove();
 					});
 				});
 			</script>
@@ -223,6 +224,29 @@ if (isset($_POST['Ubah'])) {
         keterangan='" . $_POST['keterangan'] . "'
         WHERE id='" . $_GET['kode'] . "'";
 	$query_ubah = mysqli_query($koneksi, $sql_ubah);
+
+	//memasukkan data ke array
+	$id_kunjungan       = $_GET['kode'];
+	$t_kunjungan         = $_POST['t_kunjungan'];
+	$rincian     = $_POST['rincian'];
+
+	$jumlah_data = $_POST['t_kunjungan'];
+	// $array_data = [];
+	$delete = "DELETE FROM kunjungan_rincian WHERE id_kunjungan=$id_kunjungan";
+	$delete_cek = mysqli_query($koneksi, $delete);
+	for ($i = 0; $i < sizeof($jumlah_data) - 1; $i++) {
+		// $selectSql = "SELECT * FROM kunjungan_rincian WHERE id_kunjungan='" . $_GET['kode'] . "' LIMIT $i,1";
+		// $select_cek = mysqli_query($koneksi, $selectSql);
+		// $row_select = mysqli_fetch_assoc($select_cek);
+		// array_push($array_data, $row_select['id']);
+
+		mysqli_query($koneksi, "INSERT INTO kunjungan_rincian SET
+		id_kunjungan    = '$id_kunjungan',
+            t_kunjungan    = '$t_kunjungan[$i]',
+            rincian      = '$rincian[$i]'
+			-- WHERE id = $array_data[$i];
+        ");
+	}
 
 	if ($query_ubah) {
 		echo "<script>

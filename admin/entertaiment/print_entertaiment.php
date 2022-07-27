@@ -2,11 +2,13 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$siswa = mysqli_query($koneksi, "SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-tanggal_bongkaran DESC");
+$sql_cek = "SELECT E.*, K.nama from entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik ORDER BY tanggal DESC";
+$query_cek = mysqli_query($koneksi, $sql_cek);
+$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 
 
 $mpdf = new \Mpdf\Mpdf();
+$mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +17,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA BONGKARAN</title>
+    <title>PRINT DATA FORMULIR ENTERTAIMENT</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%;">
@@ -35,25 +37,35 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">LAPORAN DATA PENGAJUAN BONGKARAN</h3>
+    <h3 align="center">DATA FORMULIR ENTERTAIMENT</h3>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
         <th>No</th>
-        <th>Nama</th>
-        <th>Tanggal Bongkaran</th>
-        <th>Container</th>
-        <th>Jumlah Pengajuan</th>
-        <th>Uang Muka</th>
+        <th>Nama Karyawan</th>
+        <th>Tanggal</th>
+        <th>Kegiatan</th>
+        <th>Nama Tempat</th>
+        <th>Alamat</th>
+        <th>Jumlah Orang</th>
+        <th>Nama Relasi</th>
+        <th>Posisi</th>
+        <th>Nama Perusahaan</th>
+        <th>Keterangan</th>
     </tr> ';
     $i = 1;
-    foreach( $siswa as $row) {
+    foreach( $query_cek as $data) {
         $html .= '<tr>
         <td align="center">'. $i++ .'</td>
-        <td align="center">'. $row["nama"].'</td>
-        <td align="center">'. $row["tanggal_bongkaran"].'</td>
-        <td align="center">'. $row["container"].'</td>
-        <td align="center">'. $row["sewa_mobil"]+$row["konsumsi"]+$row["forklift"]+$row["ekspedisi"]+$row["tol"]+$row["lainnya"].'</td>
-        <td align="center">'. $row["uang_muka"].'</td>
+        <td align="left">'. $data["nama"].'</td>
+        <td align="center">'. $data["tanggal"].'</td>
+        <td align="left">'. $data["jenis"].'</td>
+        <td align="left">'. $data["nama_tempat"].'</td>
+        <td align="left">'. $data["alamat"].'</td>
+        <td align="center">'. $data["jumlah"].' Orang</td>
+        <td align="left">'. $data["nama_relasi"].'</td>
+        <td align="left">'. $data["posisi_relasi"].'</td>
+        <td align="left">'. $data["perusahaan_relasi"].'</td>
+        <td align="left">'. $data["keterangan"].'</td>
         </tr>';
     }
 

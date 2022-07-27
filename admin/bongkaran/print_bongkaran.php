@@ -2,15 +2,16 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM bongkaran WHERE id='" . $_GET['kode'] . "'";
-	$query_cek = mysqli_query($koneksi, $sql_cek);
-	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-}
+
+$sql_cek = "SELECT *FROM bongkaran B INNER JOIN karyawan K ON B.id_karyawan=K.nik ORDER BY tanggal_bongkaran DESC";
+$query_cek = mysqli_query($koneksi, $sql_cek);
+$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+
 
 
 
 $mpdf = new \Mpdf\Mpdf();
+$mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -49,19 +50,19 @@ $html = '
         <th>Jumlah Pengajuan</th>
         <th>Uang Muka</th>
     </tr> ';
-    $i = 1;
-    foreach( $data_cek as $data) {
-        $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="center">'. $data["nama"].'</td>
-        <td align="center">'. $data["tanggal_bongkaran"].'</td>
-        <td align="center">'. $data["container"].'</td>
-        <td align="center">'. $data["sewa_mobil"]+$data["konsumsi"]+$data["forklift"]+$data["ekspedisi"]+$data["tol"]+$data["lainnya"].'</td>
-        <td align="center">'. $data["uang_muka"].'</td>
+$i = 1;
+foreach ($query_cek as $data) {
+    $html .= '<tr>
+        <td align="center">' . $i++ . '</td>
+        <td align="left">' . $data["nama"] . '</td>
+        <td align="center">' . date('l,d M Y', strtotime($data["tanggal_bongkaran"])) . '</td>
+        <td align="center">' . $data["container"] . '</td>
+        <td align="right">Rp ' . number_format($data["sewa_mobil"] + $data["konsumsi"] + $data["forklift"] + $data["ekspedisi"] + $data["tol"] + $data["lainnya"]) . '</td>
+        <td align="right">Rp ' . number_format($data["uang_muka"]) . '</td>
         </tr>';
-    }
+}
 
-    $html .=   '</table>
+$html .=   '</table>
 
     <table style="border: 1px solid #fff;">
         <tr></tr>
@@ -93,7 +94,7 @@ $html = '
 </body>
 </html>';
 
-    
+
 
 $mpdf->WriteHTML($html);
 $mpdf->Output();

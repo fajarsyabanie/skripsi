@@ -207,7 +207,7 @@ include "inc/koneksi.php";
 						</li>
 
 
-						<li class="treeview">
+						<!-- <li class="treeview">
 							<a href="#">
 								<i class="fa fa-print"></i>
 								<span>Laporan</span>
@@ -237,7 +237,7 @@ include "inc/koneksi.php";
 										<i class="fa fa-file"></i>Laporan Absensi Karyawan</a>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 
 						<li class="header">SETTING</li>
 
@@ -401,6 +401,9 @@ include "inc/koneksi.php";
 						case 'MyApp/del_barang':
 							include "admin/kasbon/del_kasbon.php";
 							break;
+						case 'MyApp/print_barang':
+							include "admin/kasbon/print_kasbon.php";
+							break;
 
 
 							//bongkaran
@@ -419,6 +422,9 @@ include "inc/koneksi.php";
 						case 'MyApp/print_bongkaran':
 							include "admin/bongkaran/print_bongkaran.php";
 							break;
+						case 'MyApp/print_data_bongkaran':
+							include "admin/bongkaran/print_data_bongkaran.php";
+							break;
 
 							//bongkaran admin gudang
 						case 'MyAppGudang/data_bongkaran':
@@ -432,6 +438,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyAppGudang/del_bongkaran':
 							include "admin_gudang/bongkaran/del_bongkaran.php";
+							break;
+						case 'MyAppGudang/print_bongkaran':
+							include "admin_gudang/bongkaran/print_bongkaran.php";
 							break;
 
 							//dinas
@@ -447,6 +456,9 @@ include "inc/koneksi.php";
 						case 'MyApp/del_dinas':
 							include "admin/dinas/del_dinas.php";
 							break;
+						case 'MyApp/print_dinas':
+							include "admin/dinas/print_dinas.php";
+							break;
 
 							//dinas sales
 						case 'MyAppSales/data_dinas':
@@ -460,6 +472,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyAppSales/del_dinas':
 							include "sales/dinas/del_dinas.php";
+							break;
+						case 'MyAppSales/print_dinas':
+							include "sales/dinas/print_dinas.php";
 							break;
 
 
@@ -477,6 +492,9 @@ include "inc/koneksi.php";
 						case 'MyApp/del_bensin':
 							include "admin/bensin/del_bensin.php";
 							break;
+						case 'MyApp/print_bensin':
+							include "admin/bensin/print_bensin.php";
+							break;
 
 							//kunjungan
 						case 'MyApp/data_kunjungan':
@@ -490,6 +508,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/del_kunjungan':
 							include "admin/kunjungan/del_kunjungan.php";
+							break;
+						case 'MyApp/print_kunjungan':
+							include "admin/kunjungan/print_kunjungan.php";
 							break;
 
 							//kunjungan sales
@@ -505,6 +526,9 @@ include "inc/koneksi.php";
 						case 'MyAppSales/del_kunjungan':
 							include "sales/kunjungan/del_kunjungan.php";
 							break;
+						case 'MyAppSales/print_kunjungan':
+							include "sales/kunjungan/print_kunjungan.php";
+							break;
 
 							//entertaiment
 						case 'MyApp/data_entertaiment':
@@ -518,6 +542,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/del_entertaiment':
 							include "admin/entertaiment/del_entertaiment.php";
+							break;
+						case 'MyApp/print_entertaiment':
+							include "admin/entertaiment/print_entertaiment.php";
 							break;
 
 							//entertaiment sales
@@ -533,6 +560,9 @@ include "inc/koneksi.php";
 						case 'MyAppSales/del_entertaiment':
 							include "sales/entertaiment/del_entertaiment.php";
 							break;
+						case 'MyAppSales/print_entertaiment':
+							include "sales/entertaiment/print_entertaiment.php";
+							break;
 
 							//mutasi
 						case 'MyApp/data_mutasi':
@@ -546,6 +576,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/del_mutasi':
 							include "admin/mutasi/del_mutasi.php";
+							break;
+						case 'MyApp/print_mutasi':
+							include "admin/mutasi/print_mutasi.php";
 							break;
 
 
@@ -561,6 +594,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/del_kasbonbeli':
 							include "admin/kasbonbeli/del_kasbonbeli.php";
+							break;
+						case 'MyApp/print_kasbonbeli':
+							include "admin/kasbonbeli/print_kasbonbeli.php";
 							break;
 
 

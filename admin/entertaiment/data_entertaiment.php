@@ -27,14 +27,8 @@ if (isset($_GET['kode'])) {
 		<div class="box-header with-border">
 			<a href="?page=MyApp/add_entertaiment" title="Tambah Data" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Buat Formulir Entertaiment</a>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-remove"></i>
-				</button>
-			</div>
+			<a href="admin/entertaiment/print_entertaiment.php" target="_blank" title="Tambah Data" class="btn btn-success ">
+				<i class="glyphicon glyphicon-print"></i> Print Data</a>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -72,7 +66,7 @@ if (isset($_GET['kode'])) {
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y',strtotime($data['tanggal'])); ?>
+									<?php echo date('l,d M Y', strtotime($data['tanggal'])); ?>
 								</td>
 								<td>
 									<?php echo $data['jenis']; ?>
@@ -99,6 +93,9 @@ if (isset($_GET['kode'])) {
 								<td>
 									<a href="?page=MyApp/edit_entertaiment&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
+									</a>
+									<a href="admin/entertaiment/print_data_entertaiment.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
 									</a>
 									<a href="?page=MyApp/del_entertaiment&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>

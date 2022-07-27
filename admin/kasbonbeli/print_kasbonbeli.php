@@ -2,8 +2,12 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$kasbon = mysqli_query($koneksi, "SELECT B.*, K.nama FROM kasbon B INNER JOIN karyawan K on B.id_karyawan = K.nik ORDER BY tanggal DESC");
 
+$sql_cek = "SELECT B.*, K.nama, P.nama_perwakilan FROM kasbon_beli B 
+INNER JOIN karyawan K on B.id_karyawan = K.id 
+INNER JOIN perwakilan P on B.id_perwakilan = P.id ORDER BY tanggal DESC";
+$query_cek = mysqli_query($koneksi, $sql_cek);
+$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 
 $mpdf = new \Mpdf\Mpdf();
 $html = '
@@ -96,5 +100,3 @@ $html = '
 
 $mpdf->WriteHTML($html);
 $mpdf->Output();
-?>
-

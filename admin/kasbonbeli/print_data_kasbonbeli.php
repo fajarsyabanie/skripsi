@@ -2,12 +2,10 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$sql_cek = "SELECT D.*, K.nama FROM dinas D INNER JOIN karyawan K ON D.id_karyawan = K.nik ORDER BY t_berangkat DESC";
-$query_cek = mysqli_query($koneksi, $sql_cek);
+$kasbon = mysqli_query($koneksi, "SELECT B.*, K.nama FROM kasbon B INNER JOIN karyawan K on B.id_karyawan = K.nik ORDER BY tanggal DESC");
 
 
 $mpdf = new \Mpdf\Mpdf();
-$mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -16,47 +14,49 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA PERJALANAN DINAS</title>
+    <title>Data Pinjaman Karyawan</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%;">
-<tr>
-<td style="width: 15%;">
-    <img src="../../dist/img/logo.jpg" style="width:90px; height:90px;"> 
-</td>
-<td style="width:77%;">
-    <left>
-        <p style="font-size: 25px; color:#FF0000"><b>PT TOTAL SARANA MANDIRI</b></p>
-        <P style="font-size: 12px";>Komplek Duta Indah Karya Blok A No. 10-Jl. Daan Mogot KM. 14 Jakarta Barat 11740</P>
-        <p style="font-size: 12px";>Telp : (62 21)2967 5301. Fax (62 21)2967 5302. E-mail : totalsarana@yahoo.com</p>
-    </left>
-</td>
-</tr>
+            <tr>
+                <td style="width: 15%;">
+                    <img src="../../dist/img/logo.jpg" style="width:90px; height:90px;"> 
+                </td>
+                <td style="width:77%;">
+                    <left>
+                        <p style="font-size: 25px; color:#FF0000"><b>PT TOTAL SARANA MANDIRI</b></p>
+                        <P style="font-size: 12px";>Komplek Duta Indah Karya Blok A No. 10-Jl. Daan Mogot KM. 14 Jakarta Barat 11740</P>
+                        <p style="font-size: 12px";>Telp : (62 21)2967 5301. Fax (62 21)2967 5302. E-mail : totalsarana@yahoo.com</p>
+                    </left>
+                </td>
+            </tr>
     </table>
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">DATA DECLARASI PERJALANAN DINAS</h3>
+    <h3 align="center">LAPORAN DATA PEMINJAMAN KARYAWAN</h3>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
         <th>No</th>
-        <th>Nama</th>
-        <th>Berangkat Dari</th>
-        <th>Tanggal Berangkat</th>
-        <th>Tanggal Pulang</th>
-        <th>Tujuan</th>
-        <th>Total Pengajuan</th>
+        <th>Nama Karyawan</th>
+        <th>Tanggal Pengajuan</th>
+        <th>Besarnya Pinjaman</th>
+        <th>Keperluan Peminjaman</th>
+        <th>Jangka Waktu(Bulan)</th>
+        <th>Jumlah Pemotongan</th>
+        <th>Cara Pengembalian</th>
     </tr> ';
     $i = 1;
-    foreach( $query_cek as $data_cek) {
+    foreach( $kasbon as $row) {
         $html .= '<tr>
         <td align="center">'. $i++ .'</td>
-        <td align="left">'. $data_cek["nama"].'</td>
-        <td align="left">'. $data_cek["dari"].'</td>
-        <td align="center">'. $data_cek["t_berangkat"].'</td>
-        <td align="center">'. $data_cek["t_pulang"].'</td>
-        <td align="left">'. $data_cek["tujuan"].'</td>
-        <td align="right">Rp '. number_format($data_cek["j_tiket"]+$data_cek["j_hotel"]+$data_cek["j_taxi"]+$data_cek["j_konsumsi"]+$data_cek["j_etertaiment"]+$data_cek["j_lainnya"]).'</td>
+        <td align="center">'. $row["nama"].'</td>
+        <td align="center">'. $row["tanggal"].'</td>
+        <td align="center">'. $row["besar_pinjaman"].'</td>
+        <td align="center">'. $row["keperluan"].'</td>
+        <td align="center">'. $row["jangka_waktu"].'</td>
+        <td align="center">'. $row["jumlah_pemotongan"].'</td>
+        <td align="center">'. $row["cara_pengembalian"].'</td>
         </tr>';
     }
 
@@ -87,7 +87,7 @@ $html = '
             NATAL TANDI
             </td>
         </tr>
-    </table>
+    </table>    
     
 </body>
 </html>';

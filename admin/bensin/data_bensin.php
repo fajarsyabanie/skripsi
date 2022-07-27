@@ -98,6 +98,9 @@ if (isset($_GET['kode'])) {
 									<a href="?page=MyApp/edit_bensin&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
+									<a href="?page=MyApp/print_bensin&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
+									</a>
 									<a href="?page=MyApp/del_bensin&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
