@@ -75,7 +75,7 @@ if (isset($_GET['kode'])) {
 									<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/print_mutasi&kode=<?php echo $data['id']; ?>" title="Print" class="btn btn-success">
+									<a href="admin/mutasi/print_mutasi.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
 										<i class="glyphicon glyphicon-print"></i>
 									</a>
 									<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">

@@ -1,7 +1,10 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM mutasi m INNER JOIN karyawan k ON k.nik = m.id_karyawan WHERE m.id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM mutasi m 
+	INNER JOIN karyawan k ON k.nik = m.id_karyawan 
+	INNER JOIN perwakilan p ON m.id_cabang = p.id
+	WHERE m.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }

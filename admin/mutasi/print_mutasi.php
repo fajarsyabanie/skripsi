@@ -2,8 +2,16 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$siswa = mysqli_query($koneksi, "SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-tanggal_bongkaran DESC");
+
+$sql_cek = "SELECT M.*, K.nama, P.nama_perwakilan FROM mutasi M 
+INNER JOIN karyawan K on M.id_karyawan = K.nik 
+INNER JOIN perwakilan P on M.id_cabang = P.id WHERE M.id='" . $_GET['kode'] . "'";
+$query_cek = mysqli_query($koneksi, $sql_cek);
+$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+
+$sql_cek2 = "SELECT * FROM mutasi_rinci WHERE id_mutasi='" . $_GET['kode'] . "'";
+$query_cek2 = mysqli_query($koneksi, $sql_cek2);
+$data_cek2 = mysqli_fetch_array($query_cek2, MYSQLI_BOTH);
 
 
 $mpdf = new \Mpdf\Mpdf();
@@ -35,56 +43,83 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">LAPORAN DATA PENGAJUAN BONGKARAN</h3>
+    <h3 align="center">LAPORAN ARUS KAS KELUAR</h3>
+
+    <p>Perwakilan : '. $data_cek["nama_perwakilan"].'</p>
+    <p>Periode : '. date('d M Y', strtotime($data_cek["t_awal"])).' - '. date('d M Y', strtotime($data_cek["t_akhir"])).'</p>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>Tanggal Bongkaran</th>
-        <th>Container</th>
-        <th>Jumlah Pengajuan</th>
-        <th>Uang Muka</th>
+        <th style="width:4%;">No</th>
+        <th style="width:15%;">Tanggal</th>
+        <th style="width:62%;">Rincian</th>
+        <th style="width:19%;">Biaya</th>
     </tr> ';
+    $total = 0;
     $i = 1;
-    foreach( $siswa as $row) {
+    foreach( $query_cek2 as $row) {
         $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="center">'. $row["nama"].'</td>
-        <td align="center">'. $row["tanggal_bongkaran"].'</td>
-        <td align="center">'. $row["container"].'</td>
-        <td align="center">'. $row["sewa_mobil"]+$row["konsumsi"]+$row["forklift"]+$row["ekspedisi"]+$row["tol"]+$row["lainnya"].'</td>
-        <td align="center">'. $row["uang_muka"].'</td>
-        </tr>';
+        <td align="center" >'. $i++ .'</td>
+        <td align="center">'. date('d M Y', strtotime($row["tanggal"])).'</td>
+        <td align="left">'. $row["rincian"].'</td>
+        <td align="right">Rp '. number_format($row["biaya"]).'</td>
+        </tr>
+        ' .$total += $row['biaya'] . '
+        ';
     }
 
-    $html .=   '</table>
-
-    <table style="border: 1px solid #fff;">
-        <tr></tr>
-        <tr>
-        
-            <td align="right" style="width: 15%;">
-            <br>
-            <br>Banjarbaru, _______________
-            </td>
-        </tr>
-        
-        <tr>
-            <td align="right" style="width: 15%; padding-right: 45px;">
-                Mengetahui
-            </td>
-        </tr>
-        <tr>
-            <td align="right" style="width: 20%; padding-right: 10px">
-            KEPALA CABANG
-            </td>
-        </tr>
-        <tr>
-            <td align="right" style="width: 30%; padding-top: 90px; padding-right: 15px">
-            NATAL TANDI
-            </td>
+    $html .=   '
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td  align="center"> TOTAL</td>
+        <td align="right">Rp '. number_format($total).' </td>
         </tr>
     </table>
+
+    <br>
+    <br>
+    <br>
+
+     <table style="border: 1px solid #fff;" border="0" width="100%">
+        <tr>
+        </tr>
+        <tr>
+        </tr>
+        
+        <tr>
+            <td align="center">
+                Dibuat Oleh :
+            </td>
+            <td align="center">
+                Diperiksa Oleh :
+            </td>
+            <td align="center">
+                Mengetahui Atasan Langsung
+            </td>
+            <td align="center">
+                Persetujuan Direktur
+            </td>
+        </tr>
+        <tr>
+           
+        </tr>
+        <tr>
+            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Nama :'. $data_cek["nama"].'
+            </td>
+            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Nama :
+            </td>
+            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Nama :
+            </td>
+            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Nama :
+            </td>
+       </tr>
+    </table>    
     
 </body>
 </html>';

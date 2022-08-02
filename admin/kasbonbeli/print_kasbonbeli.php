@@ -10,6 +10,7 @@ $query_cek = mysqli_query($koneksi, $sql_cek);
 $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 
 $mpdf = new \Mpdf\Mpdf();
+$mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>Data Pinjaman Karyawan</title>
+    <title>DATA KAS BON</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%;">
@@ -38,29 +39,25 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">LAPORAN DATA PEMINJAMAN KARYAWAN</h3>
+    <h3 align="center">LAPORAN DATA KASBON</h3>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
         <th>No</th>
+        <th>Kantor Perwakilan</th>
         <th>Nama Karyawan</th>
-        <th>Tanggal Pengajuan</th>
-        <th>Besarnya Pinjaman</th>
-        <th>Keperluan Peminjaman</th>
-        <th>Jangka Waktu(Bulan)</th>
-        <th>Jumlah Pemotongan</th>
-        <th>Cara Pengembalian</th>
+        <th>Tanggal</th>
+        <th>Keperluan Kasbon</th>
+        <th>Value</th>
     </tr> ';
     $i = 1;
-    foreach( $kasbon as $row) {
+    foreach( $query_cek as $data) {
         $html .= '<tr>
         <td align="center">'. $i++ .'</td>
-        <td align="center">'. $row["nama"].'</td>
-        <td align="center">'. $row["tanggal"].'</td>
-        <td align="center">'. $row["besar_pinjaman"].'</td>
-        <td align="center">'. $row["keperluan"].'</td>
-        <td align="center">'. $row["jangka_waktu"].'</td>
-        <td align="center">'. $row["jumlah_pemotongan"].'</td>
-        <td align="center">'. $row["cara_pengembalian"].'</td>
+        <td align="left">'. $data["nama_perwakilan"].'</td>
+        <td align="left">'. $data["nama"].'</td>
+        <td align="center">'. date('d M Y', strtotime($data["tanggal"])).'</td>
+        <td align="left">'. $data["keperluan"].'</td>
+        <td align="right">Rp '. number_format($data["harga"]).'</td>
         </tr>';
     }
 

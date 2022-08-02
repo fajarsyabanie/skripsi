@@ -2,8 +2,15 @@
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$siswa = mysqli_query($koneksi, "SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-tanggal_bongkaran DESC");
+
+$sql_cek = "SELECT R.*, K.nama from rencana_kunjungan R 
+INNER JOIN karyawan K ON R.id_karyawan = K.nik WHERE R.id='" . $_GET['kode'] . "'";
+$query_cek = mysqli_query($koneksi, $sql_cek);
+$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+
+$sql_cek2 = "SELECT * FROM kunjungan_rincian  WHERE id_kunjungan='" . $_GET['kode'] . "' ORDER BY t_kunjungan ASC ";
+$query_cek2 = mysqli_query($koneksi, $sql_cek2);
+$data_cek2 = mysqli_fetch_array($query_cek2, MYSQLI_BOTH);
 
 
 $mpdf = new \Mpdf\Mpdf();
@@ -35,56 +42,128 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">LAPORAN DATA PENGAJUAN BONGKARAN</h3>
+    <h3 align="center">RENCANA KUNJUNGAN KE DAERAH</h3> 
+    <table rules="none" border="0" >
+ 
+    
+    <tr>
+        <td>Tujuan Daerah</td>
+        <td>: ' . $data_cek["tujuan_daerah"] . '</td>
+    </tr>
+    <tr>
+        <td>Periode</td>
+        <td>: '. date('d M Y', strtotime($data_cek["t_berangkat"])).' - '. date('d M Y', strtotime($data_cek["t_pulang"])).'</td>
+    </tr>
+    <tr>
+        <td>Maksud dan Tujuan</td>
+        <td>: </td>
+    </tr>
+</table>
+<br>
+
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>Tanggal Bongkaran</th>
-        <th>Container</th>
-        <th>Jumlah Pengajuan</th>
-        <th>Uang Muka</th>
+        <th>Tanggal</th>
+        <th>Rincian</th>
     </tr> ';
-    $i = 1;
-    foreach( $siswa as $row) {
+
+    foreach( $query_cek2 as $row) {
         $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="center">'. $row["nama"].'</td>
-        <td align="center">'. $row["tanggal_bongkaran"].'</td>
-        <td align="center">'. $row["container"].'</td>
-        <td align="center">'. $row["sewa_mobil"]+$row["konsumsi"]+$row["forklift"]+$row["ekspedisi"]+$row["tol"]+$row["lainnya"].'</td>
-        <td align="center">'. $row["uang_muka"].'</td>
-        </tr>';
+        <td align="center" style="width: 15%">' . date('d M Y', strtotime($row["t_kunjungan"])) . '</td>
+        <td align="left">  ' . $row["rincian"] . '</td>
+        ';
     }
 
     $html .=   '</table>
 
-    <table style="border: 1px solid #fff;">
-        <tr></tr>
-        <tr>
-        
-            <td align="right" style="width: 15%;">
-            <br>
-            <br>Banjarbaru, _______________
-            </td>
-        </tr>
-        
-        <tr>
-            <td align="right" style="width: 15%; padding-right: 45px;">
-                Mengetahui
-            </td>
-        </tr>
-        <tr>
-            <td align="right" style="width: 20%; padding-right: 10px">
-            KEPALA CABANG
-            </td>
-        </tr>
-        <tr>
-            <td align="right" style="width: 30%; padding-top: 90px; padding-right: 15px">
-            NATAL TANDI
-            </td>
-        </tr>
-    </table>
+    <br>
+    <p> Biaya yang dibutuhkan :
+
+    <table rules="none" border="0" width="100%" >
+ 
+    
+    <tr>
+        <td width="25%">Keberangkatan</td>
+        <td width="25%">: ' . $data_cek["keberangkatan"] . '</td>
+        <td width="25%">Tiket Berangkat</td>
+        <td width="25%">:Rp ' . number_format($data_cek["tiket_berangkat"]) . '</td>
+    </tr>
+    <tr>
+        <td>Bahan Bakar Minyak</td>
+        <td>:Rp '. number_format($data_cek['bbm']).'</td>
+        <td>Tiket Pulang</td>
+        <td>:Rp ' . number_format($data_cek["tiket_pulang"]) . '</td>
+    </tr>
+    <tr>
+        <td>Penginapan</td>
+        <td>:Rp ' . number_format($data_cek["penginapan"]) . '</td>
+    </tr>
+    <tr>
+        <td>Konsumsi</td>
+        <td>:Rp ' . number_format($data_cek["makan"]) . '</td>
+    </tr>
+    <tr>
+        <td>Biaya Lainnya</td>
+        <td>:Rp ' . number_format($data_cek["lainnya"]) . '</td>
+    </tr>
+    
+</table>
+<br>
+<br>
+
+
+
+<table style="border: 1px solid #fff;" border="0" width="100%">
+<tr>
+</tr>
+<tr>
+</tr>
+
+<tr>
+    <td align="center">
+        Diajukan Oleh :
+    </td>
+    <td align="center">
+        Diperiksa Oleh :
+    </td>
+    <td align="center">
+        Mengetahui Atasan Langsung
+    </td>
+    <td align="center">
+        Persetujuan Direktur
+    </td>
+</tr>
+<tr>
+   
+</tr>
+<tr>
+    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+    Nama :'. $data_cek["nama"].'
+    </td>
+    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+    Nama :
+    </td>
+    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+    Nama :
+    </td>
+    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
+    Nama :
+    </td>
+<tr>
+    <td align="left">
+    Tanggal :'. $data_cek["tanggal"].'
+    </td>
+    <td align="left">
+    Tanggal :
+    </td>
+    <td align="left">
+    Tanggal :
+    </td>
+    <td align="left">
+    Tanggal :
+    </td>
+</tr>
+</table>    
     
 </body>
 </html>';

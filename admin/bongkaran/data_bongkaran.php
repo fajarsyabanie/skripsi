@@ -25,12 +25,10 @@ if (isset($_GET['kode'])) {
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<div class="row">
 				<a href="?page=MyApp/add_bongkaran" title="Tambah Data" class="btn btn-primary">
 					<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Bongkaran</a>
 				<a  href="admin/bongkaran/print_bongkaran.php" target="_blank" title="Tambah Data" class="btn btn-success ">
 					<i class="glyphicon glyphicon-print"></i> Print Data</a>
-			</div>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">

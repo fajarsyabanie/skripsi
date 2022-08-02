@@ -18,17 +18,8 @@
 		<div class="box-header with-border">
 			<a href="?page=MyApp/add_barang" title="Tambah Data" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Peminjaman</a>
-
-
-
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-remove"></i>
-				</button>
-			</div>
+			<a href="admin/kasbon/print_kasbon.php" target="_blank" title="Tambah Data" class="btn btn-success ">
+				<i class="glyphicon glyphicon-print"></i> Print Data</a>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -41,8 +32,8 @@
 							<th>Tanggal Pengajuan</th>
 							<th>Besarnya Pinjaman</th>
 							<th>Keperluan Peminjaman</th>
-							<th>Jangka Waktu(Bulan)</th>
-							<th>Jumlah Pemotongan (Per Bulan)</th>
+							<th>Jangka Waktu</th>
+							<th>Pemotongan Per Bulan</th>
 							<th>Cara Pengembalian</th>
 							<th>Kelola</th>
 						</tr>
@@ -63,19 +54,19 @@
 									<?php echo $data['nama']; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y',strtotime($data['tanggal'])); ?>
+									<?php echo date('d M Y', strtotime($data['tanggal'])); ?>
 								</td>
 								<td>
-									<?php echo 'Rp ', number_format ($data['besar_pinjaman']); ?>
+									<?php echo 'Rp ', number_format($data['besar_pinjaman']); ?>
 								</td>
 								<td>
 									<?php echo $data['keperluan']; ?>
 								</td>
 								<td>
-									<?php echo $data['jangka_waktu'] , ' Bulan' ?>
+									<?php echo $data['jangka_waktu'], ' Bulan' ?>
 								</td>
 								<td>
-									<?php echo 'Rp ', number_format ($data['jumlah_pemotongan']); ?>
+									<?php echo 'Rp ', number_format($data['jumlah_pemotongan']); ?>
 								</td>
 								<td>
 									<?php echo $data['cara_pengembalian']; ?>
@@ -84,7 +75,7 @@
 									<a href="?page=MyApp/edit_barang&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/print_barang&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="admin/kasbon/print_data_kasbon.php?kode=<?php echo $data['id']; ?>" title="Ubah" target="blank" class="btn btn-success">
 										<i class="glyphicon glyphicon-print"></i>
 									</a>
 									<a href="?page=MyApp/del_barang&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">

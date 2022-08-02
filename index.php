@@ -75,7 +75,7 @@ include "inc/koneksi.php";
 							<a class="dropdown-toggle">
 								<span>
 									<b>
-										Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri
+										Website Administrasi keuangan PT Total Sarana Mandiri
 									</b>
 								</span>
 							</a>
@@ -140,7 +140,7 @@ include "inc/koneksi.php";
 										<i class="fas fa-dollar"></i>Peminjaman Karyawan</a>
 								</li>
 								<li>
-									<a href="?page=MyApp/data_bongkaran">
+									<a href="?page=MyApp/tanggal_data_bongkaran">
 										<i class="fa fa-truck"></i>Bongkaran</a>
 								</li>
 								<li>
@@ -154,7 +154,7 @@ include "inc/koneksi.php";
 								</li>
 								<li>
 									<a href="?page=MyApp/data_mutasi">
-										<i class="fas fa-file-invoice-dollar"></i> Mutasi Kas Kecil</a>
+										<i class="fas fa-file-invoice-dollar"></i> Laporan Arus Kas Keluar</a>
 								</li>
 							</ul>
 						</li>
@@ -424,6 +424,9 @@ include "inc/koneksi.php";
 							break;
 						case 'MyApp/print_data_bongkaran':
 							include "admin/bongkaran/print_data_bongkaran.php";
+							break;
+						case 'MyApp/tanggal_data_bongkaran':
+							include "admin/bongkaran/tanggal_data_bongkaran.php";
 							break;
 
 							//bongkaran admin gudang
