@@ -1,4 +1,47 @@
 <?php
+
+function tanggal_indo($date, $cetak_hari = false)
+{
+  $hari = array(
+    1 =>    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+    'Minggu'
+  );
+
+  $bulan = array(
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $split = explode(' ', $date);
+  $split_tanggal = explode('-', $split[0]);
+  if (count($split) == 1) {
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0];
+  } else {
+    $split_waktu = explode(':', $split[1]);
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0] . ' ' . $split_waktu[0] . ':' . $split_waktu[1] . ':' . $split_waktu[2];
+  }
+
+  if ($cetak_hari) {
+    $num = date('N', strtotime($date));
+    return $hari[$num] . ', ' . $tgl_indo;
+  }
+  return $tgl_indo;
+}
+
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
@@ -52,7 +95,11 @@ $html = '
     </tr>
     <tr>
         <td>Periode</td>
-        <td>: '. date('d M Y', strtotime($data_cek["t_berangkat"])).' - '. date('d M Y', strtotime($data_cek["t_pulang"])).'</td>
+        <td>: '. tanggal_indo($data_cek["t_berangkat"], true).' - '. tanggal_indo($data_cek["t_pulang"], true).'</td>
+    </tr>
+    <tr>
+        <td>Keterangan</td>
+        <td>: '. $data_cek["keterangan"].'</td>
     </tr>
     <tr>
         <td>Maksud dan Tujuan</td>
@@ -69,8 +116,8 @@ $html = '
 
     foreach( $query_cek2 as $row) {
         $html .= '<tr>
-        <td align="center" style="width: 15%">' . date('d M Y', strtotime($row["t_kunjungan"])) . '</td>
-        <td align="left">  ' . $row["rincian"] . '</td>
+        <td align="left" style="width: 18%; padding-left: 10px">' . tanggal_indo($row["t_kunjungan"], false) . '</td>
+        <td align="left" style="padding-left:10px">  ' . $row["rincian"] . '</td>
         ';
     }
 
@@ -86,84 +133,63 @@ $html = '
         <td width="25%">Keberangkatan</td>
         <td width="25%">: ' . $data_cek["keberangkatan"] . '</td>
         <td width="25%">Tiket Berangkat</td>
-        <td width="25%">:Rp ' . number_format($data_cek["tiket_berangkat"]) . '</td>
+        <td width="25%">:Rp ' . number_format($data_cek["tiket_berangkat"],0,",",".") . '</td>
     </tr>
     <tr>
         <td>Bahan Bakar Minyak</td>
-        <td>:Rp '. number_format($data_cek['bbm']).'</td>
+        <td>:Rp '. number_format($data_cek['bbm'],0,",",".").'</td>
         <td>Tiket Pulang</td>
-        <td>:Rp ' . number_format($data_cek["tiket_pulang"]) . '</td>
+        <td>:Rp ' . number_format($data_cek["tiket_pulang"],0,",",".") . '</td>
     </tr>
     <tr>
         <td>Penginapan</td>
-        <td>:Rp ' . number_format($data_cek["penginapan"]) . '</td>
+        <td>:Rp ' . number_format($data_cek["penginapan"],0,",",".") . '</td>
     </tr>
     <tr>
         <td>Konsumsi</td>
-        <td>:Rp ' . number_format($data_cek["makan"]) . '</td>
+        <td>:Rp ' . number_format($data_cek["makan"],0,",",".") . '</td>
     </tr>
     <tr>
         <td>Biaya Lainnya</td>
-        <td>:Rp ' . number_format($data_cek["lainnya"]) . '</td>
+        <td>:Rp ' . number_format($data_cek["lainnya"],0,",",".") . '</td>
     </tr>
     
 </table>
-<br>
-<br>
-
-
+<h3>Total Kasbon :Rp '. number_format($data_cek["bbm"]+$data_cek["tiket_berangkat"]+$data_cek["tiket_pulang"]+$data_cek["penginapan"]+$data_cek["makan"]+$data_cek["lainnya"],0,",",".").'</h3>
+<p style = "font-size:12px">Demikian kiranya renncana kunjungan yang akan saya jalani. Terima kasih.</p>
+<p style = "font-size:12px">Banjarbaru, ' . tanggal_indo(date("Y-m-d")) . '</p>
 
 <table style="border: 1px solid #fff;" border="0" width="100%">
-<tr>
-</tr>
-<tr>
-</tr>
-
-<tr>
-    <td align="center">
-        Diajukan Oleh :
-    </td>
-    <td align="center">
-        Diperiksa Oleh :
-    </td>
-    <td align="center">
-        Mengetahui Atasan Langsung
-    </td>
-    <td align="center">
-        Persetujuan Direktur
-    </td>
-</tr>
-<tr>
-   
-</tr>
-<tr>
-    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-    Nama :'. $data_cek["nama"].'
-    </td>
-    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-    Nama :
-    </td>
-    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-    Nama :
-    </td>
-    <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-    Nama :
-    </td>
-<tr>
-    <td align="left">
-    Tanggal :'. $data_cek["tanggal"].'
-    </td>
-    <td align="left">
-    Tanggal :
-    </td>
-    <td align="left">
-    Tanggal :
-    </td>
-    <td align="left">
-    Tanggal :
-    </td>
-</tr>
-</table>    
+        <tr>
+        </tr>
+        <tr>
+        </tr>
+        
+        <tr>
+            <td align="center">
+                Disetujui Oleh,
+            </td>
+            <td align="center">
+                Mengetahui,
+            </td>
+            <td align="center">
+                Yang Melakukan Perjalanan,
+            </td>
+        </tr>
+        <tr>
+           
+        </tr>
+        <tr>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (Kurniawan)
+            </td>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (Jonatan Andre)
+            </td>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (' . $data_cek["nama"] . ')
+            </td>
+    </table>    
     
 </body>
 </html>';

@@ -1,4 +1,47 @@
 <?php
+
+function tanggal_indo($date, $cetak_hari = false)
+{
+  $hari = array(
+    1 =>    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+    'Minggu'
+  );
+
+  $bulan = array(
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $split = explode(' ', $date);
+  $split_tanggal = explode('-', $split[0]);
+  if (count($split) == 1) {
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0];
+  } else {
+    $split_waktu = explode(':', $split[1]);
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0] . ' ' . $split_waktu[0] . ':' . $split_waktu[1] . ':' . $split_waktu[2];
+  }
+
+  if ($cetak_hari) {
+    $num = date('N', strtotime($date));
+    return $hari[$num] . ', ' . $tgl_indo;
+  }
+  return $tgl_indo;
+}
+
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
@@ -43,43 +86,43 @@ $html = '
     foreach( $query_cek as $data) {
         $html .= '
         <tr>
-        <td align="left">Tanggal</td>
-        <td align="left">: '. $data["tanggal"].'</td>
+        <td align="left" style="padding-left:10px">Hari, Tanggal</td>
+        <td align="left" style="padding-left:10px">: '. tanggal_indo($data["tanggal"], true).'</td>
         </tr>
         <tr>
-        <td align="left">Kegiatan</td>
-        <td align="left">: '. $data["jenis"].'</td>
+        <td align="left" style="padding-left:10px">Kegiatan</td>
+        <td align="left" style="padding-left:10px">: '. $data["jenis"].'</td>
         </tr>
         <tr>
-        <td align="left">Nama Tempat</td>
-        <td align="left">: '. $data["nama_tempat"].'</td>
+        <td align="left" style="padding-left:10px">Nama Tempat</td>
+        <td align="left" style="padding-left:10px">: '. $data["nama_tempat"].'</td>
         </tr>
         <tr>
-        <td align="left">Alamat</td>
-        <td align="left">: '. $data["alamat"].'</td>
+        <td align="left" style="padding-left:10px">Alamat</td>
+        <td align="left" style="padding-left:10px">: '. $data["alamat"].'</td>
         </tr>
         <tr>
-        <td align="left">Jumlah</td>
-        <td align="left">: '. $data["jumlah"].' Orang</td>
+        <td align="left" style="padding-left:10px">Jumlah</td>
+        <td align="left" style="padding-left:10px">: '. $data["jumlah"].' Orang</td>
         </tr>
         <tr>
-        <td align="left">Keterangan</td>
-        <td align="left">: '. $data["keterangan"].'</td>
+        <td align="left" style="padding-left:10px">Keterangan</td>
+        <td align="left" style="padding-left:10px">: '. $data["keterangan"].'</td>
         </tr>
         <tr>
-        <td align="left">RELASI</td>
+        <td align="left" style="padding-left:10px">RELASI</td>
         </tr>
         <tr>
-        <td align="left">Nama Relasi</td>
-        <td align="left">: '. $data["nama_relasi"].'</td>
+        <td align="left" style="padding-left:10px">Nama Relasi</td>
+        <td align="left" style="padding-left:10px">: '. $data["nama_relasi"].'</td>
         </tr>
         <tr>
-        <td align="left">Posisi</td>
-        <td align="left">: '. $data["posisi_relasi"].'</td>
+        <td align="left" style="padding-left:10px">Posisi</td>
+        <td align="left" style="padding-left:10px">: '. $data["posisi_relasi"].'</td>
         </tr>
         <tr>
-        <td align="left">Perusahaan</td>
-        <td align="left">: '. $data["perusahaan_relasi"].'</td>
+        <td align="left" style="padding-left:10px">Perusahaan</td>
+        <td align="left" style="padding-left:10px">: '. $data["perusahaan_relasi"].'</td>
         </tr>
         
         

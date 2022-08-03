@@ -27,14 +27,9 @@ if (isset($_GET['kode'])) {
 		<div class="box-header with-border">
 			<a href="?page=MyApp/add_bensin" title="Tambah Data" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Pengisian BBM</a>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-remove"></i>
-				</button>
-			</div>
+			<a href="admin/bensin/print_bensin.php" title="Print Data" target="blank" class="btn btn-success">
+				<i class="glyphicon glyphicon-print"></i> Print</a>
+				
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -58,7 +53,10 @@ if (isset($_GET['kode'])) {
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT * FROM bensin B INNER JOIN karyawan K ON K.nik = B.id_karyawan INNER JOIN armada A ON A.id = B.id_armada");
+						$sql = $koneksi->query("SELECT * FROM bensin B 
+						INNER JOIN karyawan K ON K.nik = B.id_karyawan 
+						INNER JOIN armada A ON A.id = B.id_armada
+						ORDER BY t_isi DESC ");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
@@ -97,9 +95,6 @@ if (isset($_GET['kode'])) {
 								<td>
 									<a href="?page=MyApp/edit_bensin&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
-									</a>
-									<a href="?page=MyApp/print_bensin&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
-										<i class="glyphicon glyphicon-print"></i>
 									</a>
 									<a href="?page=MyApp/del_bensin&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>

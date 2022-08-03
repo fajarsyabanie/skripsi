@@ -89,45 +89,41 @@ $html = '
         <th>Pemotongan Per Bulan</th>
         <th>Cara Pengembalian</th>
     </tr> ';
-    $i = 1;
-    foreach( $kasbon as $row) {
-        $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="left" style="padding-left:10px">'.$row["nama"].'</td>
-        <td align="left" style="padding-left:10px">'.  tanggal_indo($row["tanggal"],false).'</td>
-        <td align="right" style="padding-right:10px">Rp '. number_format($row["besar_pinjaman"],0,",", ".").'</td>
-        <td align="left" style="padding-left:10px">'. $row["keperluan"].'</td>
-        <td align="left" style="padding-left:10px">'. $row["jangka_waktu"].' Bulan</td>
-        <td align="right" style="padding-right:10px">Rp '. number_format($row["jumlah_pemotongan"],0,",",".").'</td>
-        <td align="left" style="padding-left:10px">'. $row["cara_pengembalian"].'</td>
+$i = 1;
+foreach ($kasbon as $row) {
+  $html .= '<tr>
+        <td align="center">' . $i++ . '</td>
+        <td align="left" style="padding-left:10px">' . $row["nama"] . '</td>
+        <td align="left" style="padding-left:10px">' .  tanggal_indo($row["tanggal"], false) . '</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($row["besar_pinjaman"], 0, ",", ".") . '</td>
+        <td align="left" style="padding-left:10px">' . $row["keperluan"] . '</td>
+        <td align="left" style="padding-left:10px">' . $row["jangka_waktu"] . ' Bulan</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($row["jumlah_pemotongan"], 0, ",", ".") . '</td>
+        <td align="left" style="padding-left:10px">' . $row["cara_pengembalian"] . '</td>
         </tr>';
-    }
+}
 
-    $html .=   '</table>
-    <table style="page-break-inside: avoid" border="1">
-    <tr></tr>
+$html .=   '</table>
+    <table style="page-break-inside: avoid; border-collapse: collapse" border="0" width="100%" autosize="1">
     <tr>
-    
-        <td align="right" style="width: 15%;">
-        <br>
-        <br>Banjarbaru, _______________
+    <td width="75%"></td>
+        <td align="center">
+        Banjarbaru, ' . tanggal_indo(date("Y-m-d")) . '
         </td>
     </tr>
-    
     <tr>
-        <td align="right" style="width: 15%; padding-right: 45px;">
+    <td width="75%"></td>
+        <td align="center">
             Mengetahui
         </td>
     </tr>
     <tr>
-        <td align="right" style="width: 20%; padding-right: 10px">
+    <td width="75%"></td>
+        <td align="center" vertical-align="bottom" style="padding-top: 130px">
         KEPALA CABANG
         </td>
     </tr>
     <tr>
-        <td align="right" style="width: 30%; padding-top: 90px; padding-right: 15px">
-        NATAL TANDI
-        </td>
     </tr>
 </table>
     
@@ -135,7 +131,7 @@ $html = '
 </body>
 </html>';
 
-    
+
 
 $mpdf->WriteHTML($html);
 $mpdf->Output();

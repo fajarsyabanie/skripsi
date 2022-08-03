@@ -1,5 +1,48 @@
 <?php
 
+function tanggal_indo($date, $cetak_hari = false)
+{
+  $hari = array(
+    1 =>    'Senin',
+    'Selasa',
+    'Rabu',
+    'Kamis',
+    'Jumat',
+    'Sabtu',
+    'Minggu'
+  );
+
+  $bulan = array(
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $split = explode(' ', $date);
+  $split_tanggal = explode('-', $split[0]);
+  if (count($split) == 1) {
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0];
+  } else {
+    $split_waktu = explode(':', $split[1]);
+    $tgl_indo = $split_tanggal[2] . ' ' . $bulan[(int)$split_tanggal[1]] . ' ' . $split_tanggal[0] . ' ' . $split_waktu[0] . ':' . $split_waktu[1] . ':' . $split_waktu[2];
+  }
+
+  if ($cetak_hari) {
+    $num = date('N', strtotime($date));
+    return $hari[$num] . ', ' . $tgl_indo;
+  }
+  return $tgl_indo;
+}
+
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/skripsi/inc/koneksi.php';
 if (isset($_GET['kode'])) {
@@ -19,7 +62,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA BONGKARAN</title>
+    <title>PRINT DATA PERJALANAN DINAS</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%;">
@@ -52,7 +95,7 @@ $html = '
     </tr>
     <tr>
         <td>Dari</td>
-        <td>: Sales</td>
+        <td>: '.$data_cek["dari"].'</td>
         <td>Tujuan</td>
         <td>: ' . $data_cek["tujuan"] . '</td>
     </tr>
@@ -79,38 +122,38 @@ $html = '
 
 $html .= '<tr>
         <td align="center">  1 </td>
-        <td>Tiket</td>
-        <td align="right">Rp ' . number_format($data_cek["j_tiket"]) . '</td>
+        <td style="padding-left:10px">Tiket</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_tiket"]) . '</td>
         </tr>
         <tr>
         <td align="center">2</td>
-        <td>Hotel/Penginapan</td>
-        <td align="right">Rp ' . number_format($data_cek["j_hotel"]) . '</td>
+        <td style="padding-left:10px">Hotel/Penginapan</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_hotel"]) . '</td>
         </tr>
         <tr>
         <td align="center">3</td>
-        <td>Biaya Taxi</td>
-        <td align="right">Rp ' . number_format($data_cek["j_taxi"]) . '</td>
+        <td style="padding-left:10px">Biaya Taxi</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_taxi"]) . '</td>
         </tr>
         <tr>
         <td align="center">4</td>
-        <td>Biaya Konsumsi</td>
-        <td align="right">Rp ' . number_format($data_cek["j_konsumsi"]) . '</td>
+        <td style="padding-left:10px">Biaya Konsumsi</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_konsumsi"]) . '</td>
         </tr>
         <tr>
         <td align="center">5</td>
-        <td>Representasi & Entertaiment</td>
-        <td align="right">Rp ' . number_format($data_cek["j_entertaiment"]) . '</td>
+        <td style="padding-left:10px">Representasi & Entertaiment</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_entertaiment"]) . '</td>
         </tr>
         <tr>
         <td align="center">6</td>
-        <td>Lain-lain</td>
-        <td align="right">Rp ' . number_format($data_cek["j_lainnya"]) . '</td>
+        <td style="padding-left:10px">Lain-lain</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_lainnya"]) . '</td>
         </tr>
         <tr>
         <td align="center"> </td>
-        <td>Total Keseluruhan</td>
-        <td align="right">Rp ' . number_format($data_cek["j_tiket"] + $data_cek["j_hotel"] + $data_cek["j_taxi"] + $data_cek["j_konsumsi"] + $data_cek["j_entertaiment"] + $data_cek["j_lainnya"]) . '</td>
+        <td style="padding-left:10px">Total Keseluruhan</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($data_cek["j_tiket"] + $data_cek["j_hotel"] + $data_cek["j_taxi"] + $data_cek["j_konsumsi"] + $data_cek["j_entertaiment"] + $data_cek["j_lainnya"]) . '</td>
         </tr>
         <tr>'
         
@@ -121,33 +164,46 @@ $html .= '<tr>
         ;
 
 $html .=   '</table>
+<br>
+<p style = "font-size:12px">Banjarbaru, ' . tanggal_indo(date("Y-m-d")) . '</p>
 
-    <table style="border: 1px solid #fff;">
-        <tr></tr>
+<table style="border: 1px solid #fff;" border="0" width="100%">
         <tr>
-        
-            <td align="right" style="width: 15%;">
-            <br>
-            <br>Banjarbaru, _______________
-            </td>
+        </tr>
+        <tr>
         </tr>
         
         <tr>
-            <td align="right" style="width: 15%; padding-right: 45px;">
-                Mengetahui
+            <td align="center">
+                Disetujui Oleh,
+            </td>
+            <td align="center">
+                Diketahui Oleh,
+            </td>
+            <td align="center">
+                Diperiksa Oleh,
+            </td>
+            <td align="center">
+                Yang Membuat,
             </td>
         </tr>
         <tr>
-            <td align="right" style="width: 20%; padding-right: 10px">
-            KEPALA CABANG
-            </td>
+           
         </tr>
         <tr>
-            <td align="right" style="width: 30%; padding-top: 90px; padding-right: 15px">
-            NATAL TANDI
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (KURNIAWAN)
             </td>
-        </tr>
-    </table>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (JONATAN ANDRE)
+            </td>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (YUNITA)
+            </td>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            (' . $data_cek["nama"] . ')
+            </td>
+    </table>    
     
 </body>
 </html>';
