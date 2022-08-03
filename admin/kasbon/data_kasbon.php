@@ -16,7 +16,7 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_barang" title="Tambah Data" class="btn btn-primary">
+			<a href="?page=MyApp/add_kasbon" title="Tambah Data" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Peminjaman</a>
 			<a href="admin/kasbon/print_kasbon.php" target="_blank" title="Tambah Data" class="btn btn-success ">
 				<i class="glyphicon glyphicon-print"></i> Print Data</a>
@@ -72,13 +72,13 @@
 									<?php echo $data['cara_pengembalian']; ?>
 								</td>
 								<td>
-									<a href="?page=MyApp/edit_barang&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyApp/edit_kasbon&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
 									<a href="admin/kasbon/print_data_kasbon.php?kode=<?php echo $data['id']; ?>" title="Ubah" target="blank" class="btn btn-success">
 										<i class="glyphicon glyphicon-print"></i>
 									</a>
-									<a href="?page=MyApp/del_barang&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="?page=MyApp/del_kasbon&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
 							</tr>

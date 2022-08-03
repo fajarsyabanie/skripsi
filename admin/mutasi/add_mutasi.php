@@ -84,7 +84,23 @@
 							</div>
 						</div>
 
-						<h4 class="box-title box-footer">Rincian Keluar</h4>
+
+
+						<h4 class="box-title box-footer">Dana Masuk</h4>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label>Dana Masuk</label>
+								<input type="number" name="dana_masuk" id="dana_masuk" class="form-control">
+							</div>
+							<div class="form-group col-md-6">
+								<label>Dana Pegangan</label>
+								<input type="number" name="dana_pegangan" id="dana_pegangan" class="form-control">
+							</div>
+						</div>
+
+
+
+						<h4 class="box-title box-footer">Dana Keluar</h4>
 
 						<div class="control-group after-add-more">
 							<div class="form-group">
@@ -168,8 +184,13 @@ if (isset($_POST['Simpan'])) {
           '" . $_POST['t_akhir'] . "')";
 	$query_simpan = mysqli_query($koneksi, $sql_simpan);
 
-
 	$id_terakhir = mysqli_insert_id($koneksi);
+
+	$sql_simpan2 = "INSERT INTO mutasi_tambah (id_mutasi, dana_masuk, dana_pegangan) VALUES (
+		$id_terakhir,
+		'".$_POST['dana_masuk']."',
+		'".$_POST['dana_pegangan']."')";
+		$query_simpan2 = mysqli_query($koneksi, $sql_simpan2);
 
 	//memasukkan data ke array
 	$id_mutasi       = $id_terakhir;

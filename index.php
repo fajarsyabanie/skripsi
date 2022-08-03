@@ -392,17 +392,14 @@ include "inc/koneksi.php";
 						case 'MyApp/data_kasbon':
 							include "admin/kasbon/data_kasbon.php";
 							break;
-						case 'MyApp/add_barang':
+						case 'MyApp/add_kasbon':
 							include "admin/kasbon/add_kasbon.php";
 							break;
-						case 'MyApp/edit_barang':
+						case 'MyApp/edit_kasbon':
 							include "admin/kasbon/edit_kasbon.php";
 							break;
-						case 'MyApp/del_barang':
+						case 'MyApp/del_kasbon':
 							include "admin/kasbon/del_kasbon.php";
-							break;
-						case 'MyApp/print_barang':
-							include "admin/kasbon/print_kasbon.php";
 							break;
 
 

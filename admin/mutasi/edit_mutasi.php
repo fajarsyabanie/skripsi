@@ -7,6 +7,10 @@ if (isset($_GET['kode'])) {
 	WHERE m.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+
+	$sql_cek3 ="SELECT * FROM mutasi_tambah WHERE id_mutasi = '".$_GET['kode']."'";
+	$query_cek3 = mysqli_query($koneksi, $sql_cek3);
+	$data_cek3 = mysqli_fetch_array($query_cek3, MYSQLI_BOTH);
 }
 ?>
 
@@ -104,6 +108,18 @@ if (isset($_GET['kode'])) {
 							</div>
 						</div>
 
+						<h4 class="box-title box-footer">Dana Masuk</h4>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label>Dana Masuk</label>
+								<input type="number" name="dana_masuk" id="dana_masuk" class="form-control" value="<?php echo $data_cek3['dana_masuk'];?>">
+							</div>
+							<div class="form-group col-md-6">
+								<label>Dana Pegangan</label>
+								<input type="number" name="dana_pegangan" id="dana_pegangan" class="form-control" value="<?php echo $data_cek3['dana_pegangan'];?>">
+							</div>
+						</div>
+
 						<h4 class="box-title box-footer">Rincian Keluar</h4>
 						<div class="control-group after-add-more">
 							<?php
@@ -195,6 +211,12 @@ if (isset($_POST['Ubah'])) {
 	t_awal='" . $_POST['t_awal'] . "',
 	t_akhir='" . $_POST['t_akhir'] . "'
 	WHERE id='" . $_GET['kode'] . "'";
+	$sql_ubah = mysqli_query($koneksi, $sql_ubah);
+
+	$sql_ubah = "UPDATE mutasi_tambah SET 
+	dana_masuk='" . $_POST['dana_masuk'] . "',
+	dana_pegangan='" . $_POST['dana_pegangan'] . "'
+	WHERE id_mutasi='" . $_GET['kode'] . "'";
 	$sql_ubah = mysqli_query($koneksi, $sql_ubah);
 
 

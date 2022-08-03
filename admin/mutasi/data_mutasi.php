@@ -46,6 +46,8 @@ if (isset($_GET['kode'])) {
 							<th>Perwakilan</th>
 							<th>Pembuat</th>
 							<th>Periode</th>
+							<th>Debit</th>
+							<th>Kredit</th>
 							<th>Kelola</th>
 						</tr>
 					</thead>
@@ -53,7 +55,10 @@ if (isset($_GET['kode'])) {
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT M.*, K.nama, P.nama_perwakilan FROM mutasi M INNER JOIN karyawan K on M.id_karyawan = K.nik INNER JOIN perwakilan P on M.id_cabang = P.id");
+						$sql = $koneksi->query("SELECT M.*, K.nama, P.nama_perwakilan FROM mutasi M 
+						INNER JOIN karyawan K on M.id_karyawan = K.nik 
+						INNER JOIN perwakilan P on M.id_cabang = P.id
+						ORDER BY t_awal DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
@@ -70,22 +75,48 @@ if (isset($_GET['kode'])) {
 								<td>
 									<?php echo date('d M Y', strtotime($data['t_awal'])), ' - ',  date('d M Y', strtotime($data['t_akhir'])); ?>
 								</td>
-
+							<?php
+						
+							?>
+							<?php
+							$sql2 = $koneksi->query("SELECT * FROM mutasi_tambah");
+							while ($data2 = $sql2->fetch_assoc()) {
+							?>
 								<td>
-									<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
-										<i class="glyphicon glyphicon-edit"></i>
-									</a>
-									<a href="admin/mutasi/print_mutasi.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
-										<i class="glyphicon glyphicon-print"></i>
-									</a>
-									<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
-										<i class="glyphicon glyphicon-trash"></i>
-									</a>
+									<?php echo $data2['dana_masuk'] + $data2['dana_pegangan'] ?>
 								</td>
+							<?php
+							}
+							?>
+							<?php
+							$total = 0;
+							$sql3 = $koneksi->query("SELECT *, SUM(biaya) AS total FROM mutasi_rinci");
+							while ($data3 = $sql3->fetch_assoc()) {
+							?>
+								<td>
+									<?php echo $data3['total']?>
+								</td>
+							<?php
+							$total += $data3['total'];
+							}
+							?>
+
+							<td>
+								<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<i class="glyphicon glyphicon-edit"></i>
+								</a>
+								<a href="admin/mutasi/print_mutasi.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
+									<i class="glyphicon glyphicon-print"></i>
+								</a>
+								<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<i class="glyphicon glyphicon-trash"></i>
+								</a>
+							</td>
 							</tr>
-						<?php
+							<?php
 						}
-						?>
+							?>
+
 					</tbody>
 
 				</table>

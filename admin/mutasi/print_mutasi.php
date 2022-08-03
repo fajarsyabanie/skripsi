@@ -13,6 +13,10 @@ $sql_cek2 = "SELECT * FROM mutasi_rinci WHERE id_mutasi='" . $_GET['kode'] . "'"
 $query_cek2 = mysqli_query($koneksi, $sql_cek2);
 $data_cek2 = mysqli_fetch_array($query_cek2, MYSQLI_BOTH);
 
+$sql_cek3 = "SELECT * FROM mutasi_tambah WHERE id_mutasi='" . $_GET['kode'] . "'";
+$query_cek3 = mysqli_query($koneksi, $sql_cek3);
+$data_cek3 = mysqli_fetch_array($query_cek3, MYSQLI_BOTH);
+
 
 $mpdf = new \Mpdf\Mpdf();
 $html = '
@@ -46,14 +50,32 @@ $html = '
     <h3 align="center">LAPORAN ARUS KAS KELUAR</h3>
 
     <p>Perwakilan : '. $data_cek["nama_perwakilan"].'</p>
-    <p>Periode : '. date('d M Y', strtotime($data_cek["t_awal"])).' - '. date('d M Y', strtotime($data_cek["t_akhir"])).'</p>
+    <p>Periode : '. date('d', strtotime($data_cek["t_awal"])).' - '. date('d M Y', strtotime($data_cek["t_akhir"])).'</p>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
         <th style="width:4%;">No</th>
         <th style="width:15%;">Tanggal</th>
         <th style="width:62%;">Rincian</th>
-        <th style="width:19%;">Biaya</th>
-    </tr> ';
+        <th style="width:19%;">Debet</th>
+        <th style="width:19%;">Kredit</th>
+    </tr> 
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Dana Masuk</td>
+        <td align="right">Rp '.number_format($data_cek3['dana_masuk'],0,",",".").'</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Dana Pegangan</td>
+        <td align="right">Rp '.number_format($data_cek3['dana_pegangan'],0,",",".").'</td>
+        <td></td>
+    </tr>
+    
+    
+    ';
     $total = 0;
     $i = 1;
     foreach( $query_cek2 as $row) {
@@ -61,7 +83,8 @@ $html = '
         <td align="center" >'. $i++ .'</td>
         <td align="center">'. date('d M Y', strtotime($row["tanggal"])).'</td>
         <td align="left">'. $row["rincian"].'</td>
-        <td align="right">Rp '. number_format($row["biaya"]).'</td>
+        <td></td>
+        <td align="right">Rp '. number_format($row["biaya"],0,",",".").'</td>
         </tr>
         ' .$total += $row['biaya'] . '
         ';
@@ -74,15 +97,23 @@ $html = '
         <td>
         </td>
         <td  align="center"> TOTAL</td>
-        <td align="right">Rp '. number_format($total).' </td>
+        <td align="right">Rp '. number_format($data_cek3['dana_masuk']+$data_cek3['dana_pegangan'],0,",",".").' </td>
+        <td align="right">Rp '. number_format($total,0,",",".").' </td>
+        </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td  align="center"> Sisa Saldo</td>
+        <td align="right">Rp '. number_format($data_cek3['dana_masuk']+$data_cek3['dana_pegangan']-$total,0,",",".").' </td>
+        <td align="right"></td>
         </tr>
     </table>
 
     <br>
-    <br>
-    <br>
 
-     <table style="border: 1px solid #fff;" border="0" width="100%">
+<table style="border: 1px solid #fff;" border="0" width="100%">
         <tr>
         </tr>
         <tr>
@@ -90,35 +121,40 @@ $html = '
         
         <tr>
             <td align="center">
-                Dibuat Oleh :
+                Kasir,
             </td>
             <td align="center">
-                Diperiksa Oleh :
+                Dibukukan,
             </td>
             <td align="center">
-                Mengetahui Atasan Langsung
+                Diperiksa,
             </td>
             <td align="center">
-                Persetujuan Direktur
+                Diketahui,
+            </td>
+            <td align="center">
+                Disetujui,
             </td>
         </tr>
         <tr>
            
         </tr>
         <tr>
-            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-            Nama :'. $data_cek["nama"].'
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Ribka
             </td>
-            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-            Nama :
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            ' . $data_cek["nama"] . '
             </td>
-            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-            Nama :
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            Yunita
             </td>
-            <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
-            Nama :
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            
             </td>
-       </tr>
+            <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
+            
+            </td>
     </table>    
     
 </body>
