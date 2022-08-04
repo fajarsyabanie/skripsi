@@ -7,7 +7,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -16,8 +16,8 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_dinas" title="Tambah Pengajuan Perjalanan Dinas" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Perjalanan Dinas</a>
+			<!-- <a href="?page=MyApp/add_dinas" title="Tambah Pengajuan Perjalanan Dinas" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Perjalanan Dinas</a> -->
 				<a  href="admin/dinas/print_dinas.php" target="_blank" title="Tambah Data" class="btn btn-success ">
 					<i class="glyphicon glyphicon-print"></i> Print Data</a>
 		</div>

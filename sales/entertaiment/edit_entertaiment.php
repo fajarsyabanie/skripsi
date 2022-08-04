@@ -1,7 +1,9 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM entertaiment WHERE id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM entertaiment e
+	INNER JOIN karyawan k ON k.nik = e.id_karyawan
+	WHERE e.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }
@@ -29,31 +31,35 @@ if (isset($_GET['kode'])) {
 			<div class="box box-success">
 				<div class="box-header with-border">
 					<h3 class="box-title">Edit Form Entertaiment</h3>
-					<div class="box-tools pull-right">
+					<!-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
 						</button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove">
 							<i class="fa fa-remove"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
 				<form action="" method="post" enctype="multipart/form-data">
 					<div class="box-body">
 
-						<div class="form-group">
+					<div class="form-group">
 							<label>Nama Karyawan</label>
-							<?php
-							$sql = $koneksi->query("SELECT E.*, K.nama FROM entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik WHERE E.id='" . $_GET['kode'] . "' ");
-							while ($data = $sql->fetch_assoc()) 
-							{
-							?>
-								<input type='text' class="form-control" name="id_karyawan" id="id_karyawan" value="<?php echo $data['nama']; ?>" readonly />
-							<?php
-							}
-							?>
+							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
+								<?php
+								// ambil data dari database
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
+								?>
+								<?php
+								}
+								?>
+							</select>
 						</div>
 
 						<div class="form-group">
@@ -98,7 +104,7 @@ if (isset($_GET['kode'])) {
 
 					<div class="box-footer">
 						<input type="submit" name="Ubah" value="Ubah" class="btn btn-success">
-						<a href="?page=MyApp/data_entertaiment" class="btn btn-warning">Batal</a>
+						<a href="?page=MyAppSales/data_entertaiment" class="btn btn-warning">Batal</a>
 					</div>
 				</form>
 			</div>
@@ -127,7 +133,7 @@ if (isset($_POST['Ubah'])) {
         Swal.fire({title: 'Ubah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_entertaiment';
+                window.location = 'index.php?page=MyAppSales/data_entertaiment';
             }
         })</script>";
 	} else {
@@ -135,7 +141,7 @@ if (isset($_POST['Ubah'])) {
         Swal.fire({title: 'Ubah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_entertaiment';
+                window.location = 'index.php?page=MyAppSales/data_entertaiment';
             }
         })</script>";
 	}

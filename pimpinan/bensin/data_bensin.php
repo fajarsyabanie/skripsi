@@ -16,8 +16,8 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_bensin" title="Tambah Data" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Pengisian BBM</a>
+			<!-- <a href="?page=MyApp/add_bensin" title="Tambah Data" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Pengisian BBM</a> -->
 			<a href="admin/bensin/print_bensin.php" title="Print Data" target="blank" class="btn btn-success">
 				<i class="glyphicon glyphicon-print"></i> Print</a>
 

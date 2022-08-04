@@ -1,7 +1,9 @@
 <?php
 
     if(isset($_GET['kode'])){
-        $sql_cek = "SELECT * FROM dinas WHERE id='".$_GET['kode']."'";
+        $sql_cek = "SELECT * FROM dinas d
+		INNER JOIN karyawan k on k.nik = d.id_karyawan
+		WHERE d.id='".$_GET['kode']."'";
         $query_cek = mysqli_query($koneksi, $sql_cek);
         $data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
     }
@@ -16,7 +18,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Pengelolaan Alat Praktek SMKN 2 Banjarbaru</b>
+				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -29,14 +31,14 @@
 			<div class="box box-success">
 				<div class="box-header with-border">
 					<h3 class="box-title">Ubah Pengajuan Perjalanan Dinas</h3>
-					<div class="box-tools pull-right">
+					<!-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
 						</button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove">
 							<i class="fa fa-remove"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
@@ -46,16 +48,14 @@
 					<div class="form-group">
 							<label>Nama Karyawan</label>
 							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih --</option>
 								<?php
 								// ambil data dari database
-								$query = "select * from karyawan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
 								?>
-									<option value="<?php echo $row['nik'] ?>">
-										<?php echo $row['nama'] ?>
-									</option>
 								<?php
 								}
 								?>
@@ -128,7 +128,7 @@
 
 					<div class="box-footer">
 						<input type="submit" name="Ubah" value="Ubah" class="btn btn-success">
-						<a href="?page=MyApp/data_dinas" class="btn btn-warning">Batal</a>
+						<a href="?page=MyAppSales/data_dinas" class="btn btn-warning">Batal</a>
 					</div>
 				</form>
 			</div>
@@ -161,7 +161,7 @@ if (isset ($_POST['Ubah'])){
         Swal.fire({title: 'Ubah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_dinas';
+                window.location = 'index.php?page=MyAppSales/data_dinas';
             }
         })</script>";
         }else{
@@ -169,7 +169,7 @@ if (isset ($_POST['Ubah'])){
         Swal.fire({title: 'Ubah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
         }).then((result) => {
             if (result.value) {
-                window.location = 'index.php?page=MyApp/data_dinas';
+                window.location = 'index.php?page=MyAppSales/data_dinas';
             }
         })</script>";
     }

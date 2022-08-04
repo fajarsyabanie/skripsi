@@ -7,7 +7,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -20,14 +20,14 @@
 			<div class="box box-info">
 				<div class="box-header with-border">
 					<h3 class="box-title">Tambah Pengajuan Perjalanan Dinas</h3>
-					<div class="box-tools pull-right">
+					<!-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
 						</button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove">
 							<i class="fa fa-remove"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
@@ -118,7 +118,7 @@
 
 						<div class="box-footer">
 							<input type="submit" name="Simpan" value="Simpan" class="btn btn-info">
-							<a href="?page=MyApp/data_dinas" class="btn btn-warning">Batal</a>
+							<a href="?page=MyAppSales/data_dinas" class="btn btn-warning">Batal</a>
 						</div>
 				</form>
 			</div>
@@ -153,7 +153,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/data_dinas';
+              window.location = 'index.php?page=MyAppSales/data_dinas';
           }
       })</script>";
 	} else {
@@ -161,7 +161,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/add_dinas';
+              window.location = 'index.php?page=MyAppSales/add_dinas';
           }
       })</script>";
 	}

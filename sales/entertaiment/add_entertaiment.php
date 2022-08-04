@@ -20,14 +20,14 @@
 			<div class="box box-info">
 				<div class="box-header with-border">
 					<h3 class="box-title">Tambah Form Entertaiment</h3>
-					<div class="box-tools pull-right">
+					<!-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
 						</button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove">
 							<i class="fa fa-remove"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
@@ -101,7 +101,7 @@
 
 						<div class="box-footer">
 							<input type="submit" name="Simpan" value="Simpan" class="btn btn-info">
-							<a href="?page=MyApp/data_entertaiment" class="btn btn-warning">Batal</a>
+							<a href="?page=MyAppSales/data_entertaiment" class="btn btn-warning">Batal</a>
 						</div>
 				</form>
 			</div>
@@ -133,7 +133,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/data_entertaiment';
+              window.location = 'index.php?page=MyAppSales/data_entertaiment';
           }
       })</script>";
 	} else {
@@ -141,7 +141,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/add_entertaiment';
+              window.location = 'index.php?page=MyAppSales/add_entertaiment';
           }
       })</script>";
 	}

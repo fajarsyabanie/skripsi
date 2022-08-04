@@ -7,7 +7,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -105,7 +105,7 @@
 
 						<div class="box-footer">
 							<input type="submit" name="Simpan" value="Simpan" class="btn btn-info">
-							<a href="?page=MyApp/data_bongkaran" class="btn btn-warning">Batal</a>
+							<a href="?page=MyAppGudang/data_bongkaran" class="btn btn-warning">Batal</a>
 						</div>
 				</form>
 			</div>
@@ -137,7 +137,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/data_bongkaran';
+              window.location = 'index.php?page=MyAppGudang/data_bongkaran';
           }
       })</script>";
 	} else {
@@ -145,7 +145,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/add_bongkaran';
+              window.location = 'index.php?page=MyAppGudang/add_bongkaran';
           }
       })</script>";
 	}

@@ -7,7 +7,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
@@ -16,16 +16,10 @@
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyApp/add_dinas" title="Tambah Pengajuan Perjalanan Dinas" class="btn btn-primary">
+			<a href="?page=MyAppSales/add_dinas" title="Tambah Pengajuan Perjalanan Dinas" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Perjalanan Dinas</a>
-			<div class="box-tools pull-right">
-				<button type="button" class="btn btn-box-tool" data-widget="collapse">
-					<i class="fa fa-minus"></i>
-				</button>
-				<button type="button" class="btn btn-box-tool" data-widget="remove">
-					<i class="fa fa-remove"></i>
-				</button>
-			</div>
+				<a  href="sales/dinas/print_dinas.php" target="_blank" title="Tambah Data" class="btn btn-success ">
+					<i class="glyphicon glyphicon-print"></i> Print Data</a>
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -36,8 +30,7 @@
 							<th>NO</th>
 							<th>Nama</th>
 							<th>Berangkat Dari</th>
-							<th>Tanggal Berangkat</th>
-							<th>Tanggal Pulang</th>
+							<th>Periode</th>
 							<th>Tujuan</th>
 							<th>Total Pengajuan</th>
 							<th>Kelola</th>
@@ -63,10 +56,7 @@
 									<?php echo $data['dari']; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y',strtotime($data['t_berangkat'])); ?>
-								</td>
-								<td>
-									<?php echo date('l,d M Y',strtotime($data['t_pulang'])); ?>
+									<?php echo date('d M Y',strtotime($data['t_berangkat'])),' - ', date('d M Y',strtotime($data['t_pulang'])) ; ?>
 								</td>
 								<td>
 									<?php echo $data['tujuan']; ?>
@@ -76,10 +66,13 @@
 								</td>
 
 								<td>
-									<a href="?page=MyApp/edit_dinas&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyAppSales/edit_dinas&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="?page=MyApp/del_dinas&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="sales/dinas/print_data_dinas.php?kode=<?php echo $data['id']; ?>" title="Ubah" target="blank" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
+									</a>
+									<a href="?page=MyAppSales/del_dinas&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
 							</tr>

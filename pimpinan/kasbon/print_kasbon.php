@@ -45,12 +45,11 @@ function tanggal_indo($date, $cetak_hari = false)
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$sql_cek = "SELECT E.*, K.nama from entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik ORDER BY tanggal DESC";
-$query_cek = mysqli_query($koneksi, $sql_cek);
-$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+$kasbon = mysqli_query($koneksi, "SELECT B.*, K.nama FROM kasbon B INNER JOIN karyawan K on B.id_karyawan = K.nik ORDER BY tanggal DESC");
 
 
 $mpdf = new \Mpdf\Mpdf();
+
 $mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
@@ -60,7 +59,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA FORMULIR ENTERTAIMENT</title>
+    <title>Data Pinjaman Karyawan</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%; border-collapse: collapse" border="0">
@@ -78,41 +77,33 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">DATA FORMULIR ENTERTAIMENT</h3>
-    <table width="100%" border="1" cellpading="10" cellspacing="0">
+    <h3 align="center">LAPORAN DATA PEMINJAMAN KARYAWAN</h3>
+    <table width="100%" border="1" style="border-collapse: collapse">
     <tr>
         <th>No</th>
         <th>Nama Karyawan</th>
-        <th>Tanggal</th>
-        <th>Kegiatan</th>
-        <th>Nama Tempat</th>
-        <th>Alamat</th>
-        <th>Jumlah Orang</th>
-        <th>Nama Relasi</th>
-        <th>Posisi</th>
-        <th>Nama Perusahaan</th>
-        <th>Keterangan</th>
+        <th>Tanggal Pengajuan</th>
+        <th>Besarnya Pinjaman</th>
+        <th>Keperluan Peminjaman</th>
+        <th>Jangka Waktu</th>
+        <th>Pemotongan Per Bulan</th>
+        <th>Cara Pengembalian</th>
     </tr> ';
-    $i = 1;
-    foreach( $query_cek as $data) {
-        $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="left" style="padding-left:10px">'. $data["nama"].'</td>
-        <td align="left" style="padding-left:10px">'. tanggal_indo($data["tanggal"], false).'</td>
-        <td align="left" style="padding-left:10px">'. $data["jenis"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_tempat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["alamat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["jumlah"].' Orang</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["posisi_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["perusahaan_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["keterangan"].'</td>
+$i = 1;
+foreach ($kasbon as $row) {
+  $html .= '<tr>
+        <td align="center">' . $i++ . '</td>
+        <td align="left" style="padding-left:10px">' . $row["nama"] . '</td>
+        <td align="left" style="padding-left:10px">' .  tanggal_indo($row["tanggal"], false) . '</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($row["besar_pinjaman"], 0, ",", ".") . '</td>
+        <td align="left" style="padding-left:10px">' . $row["keperluan"] . '</td>
+        <td align="left" style="padding-left:10px">' . $row["jangka_waktu"] . ' Bulan</td>
+        <td align="right" style="padding-right:10px">Rp ' . number_format($row["jumlah_pemotongan"], 0, ",", ".") . '</td>
+        <td align="left" style="padding-left:10px">' . $row["cara_pengembalian"] . '</td>
         </tr>';
-    }
+}
 
-    $html .=   '</table>
-    <br>
-
+$html .=   '</table>
     <table style="page-break-inside: avoid; border-collapse: collapse" border="0" width="100%" autosize="1">
     <tr>
     <td width="75%"></td>
@@ -136,10 +127,11 @@ $html = '
     </tr>
 </table>
     
+    
 </body>
 </html>';
 
-    
+
 
 $mpdf->WriteHTML($html);
 $mpdf->Output();

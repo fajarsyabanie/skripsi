@@ -25,9 +25,9 @@ if (isset($_GET['kode'])) {
 <section class="content">
 	<div class="box box-primary">
 		<div class="box-header with-border">
-			<a href="?page=MyAppSales/add_entertaiment" title="Tambah Data" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Buat Formulir Entertaiment</a>
-			<a href="sales/entertaiment/print_entertaiment.php" target="_blank" title="Tambah Data" class="btn btn-success ">
+			<!-- <a href="?page=MyApp/add_entertaiment" title="Tambah Data" class="btn btn-primary">
+				<i class="glyphicon glyphicon-plus"></i> Buat Formulir Entertaiment</a> -->
+			<a href="admin/entertaiment/print_entertaiment.php" target="_blank" title="Tambah Data" class="btn btn-success ">
 				<i class="glyphicon glyphicon-print"></i> Print Data</a>
 		</div>
 		<!-- /.box-header -->
@@ -91,13 +91,13 @@ if (isset($_GET['kode'])) {
 								</td>
 
 								<td>
-									<a href="?page=MyAppSales/edit_entertaiment&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyApp/edit_entertaiment&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="sales/entertaiment/print_data_entertaiment.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
+									<a href="admin/entertaiment/print_data_entertaiment.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
 										<i class="glyphicon glyphicon-print"></i>
 									</a>
-									<a href="?page=MyAppSales/del_entertaiment&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="?page=MyApp/del_entertaiment&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
 							</tr>

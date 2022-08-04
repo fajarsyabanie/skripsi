@@ -22,14 +22,14 @@
 			<div class="box box-info">
 				<div class="box-header with-border">
 					<h3 class="box-title">Tambah Pengajuan Rencana Kunjungan Ke Daerah</h3>
-					<div class="box-tools pull-right">
+					<!-- <div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>
 						</button>
 						<button type="button" class="btn btn-box-tool" data-widget="remove">
 							<i class="fa fa-remove"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 				<!-- /.box-header -->
 				<!-- form start -->
@@ -123,13 +123,15 @@
 
 						<h4 class="box-title box-footer">Rincian Perjalanan</h4>
 						<div class="control-group after-add-more">
-							<div class="form-group col-sm-6">
-								<label>Tanggal Kegiatan</label>
-								<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
-							</div>
-							<div class="form-group col-sm-6">
-								<label>Rincian</label>
-								<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label>Tanggal Kegiatan</label>
+									<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
+								</div>
+								<div class="form-group col-sm-6">
+									<label>Rincian</label>
+									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+								</div>
 							</div>
 						</div>
 						<br>
@@ -142,13 +144,15 @@
 
 						<div class="copy hide">
 							<div class="control-group ">
-								<div class="form-group col-sm-6">
-									<label>Tanggal Kegiatan</label>
-									<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
-								</div>
-								<div class="form-group col-sm-6">
-									<label>Rincian</label>
-									<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+								<div class="row">
+									<div class="form-group col-sm-6">
+										<label>Tanggal Kegiatan</label>
+										<input type="date" name="t_kunjungan[]" id="t_kunjungan" class="form-control" placeholder="Tanggal Kegiatan">
+									</div>
+									<div class="form-group col-sm-6">
+										<label>Rincian</label>
+										<input type="text" name="rincian[]" id="rincian" class="form-control" placeholder="Rincian Kegiatan">
+									</div>
 								</div>
 
 								<button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -161,7 +165,7 @@
 
 						<div class="box-footer">
 							<input type="submit" name="Simpan" value="Simpan" class="btn btn-info">
-							<a href="?page=MyApp/data_kunjungan" class="btn btn-warning">Batal</a>
+							<a href="?page=MyAppSales/data_kunjungan" class="btn btn-warning">Batal</a>
 						</div>
 				</form>
 			</div>
@@ -201,24 +205,24 @@ if (isset($_POST['Simpan'])) {
           '" . $_POST['t_dibuat'] . "',
           '" . $_POST['keterangan'] . "')";
 	$query_simpan = mysqli_query($koneksi, $sql_simpan);
-	
+
 	$id_terakhir = mysqli_insert_id($koneksi);
 
-	 //memasukkan data ke array
-	 $id_kunjungan       = $id_terakhir;
-	 $t_kunjungan         = $_POST['t_kunjungan'];
-	 $rincian     = $_POST['rincian'];
-	
-	 $jumlah_data = $_POST['t_kunjungan'];
-	for($i=0; $i<sizeof($jumlah_data)-1; $i++){
+	//memasukkan data ke array
+	$id_kunjungan       = $id_terakhir;
+	$t_kunjungan         = $_POST['t_kunjungan'];
+	$rincian     = $_POST['rincian'];
 
-        mysqli_query($koneksi, "INSERT INTO kunjungan_rincian SET
+	$jumlah_data = $_POST['t_kunjungan'];
+	for ($i = 0; $i < sizeof($jumlah_data) - 1; $i++) {
+
+		mysqli_query($koneksi, "INSERT INTO kunjungan_rincian SET
 			id_kunjungan = $id_kunjungan,
             t_kunjungan    = '$t_kunjungan[$i]',
             rincian      = '$rincian[$i]'
         ");
-    }
-	
+	}
+
 	// mysqli_close($koneksi);
 
 
@@ -228,7 +232,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/data_kunjungan';
+              window.location = 'index.php?page=MyAppSales/data_kunjungan';
           }
       })</script>";
 	} else {
@@ -236,7 +240,7 @@ if (isset($_POST['Simpan'])) {
       Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
       }).then((result) => {
           if (result.value) {
-              window.location = 'index.php?page=MyApp/add_kunjungan';
+              window.location = 'index.php?page=MyAppSales/add_kunjungan';
           }
       })</script>";
 	}

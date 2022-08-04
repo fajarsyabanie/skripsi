@@ -45,10 +45,12 @@ function tanggal_indo($date, $cetak_hari = false)
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$sql_cek = "SELECT E.*, K.nama from entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik ORDER BY tanggal DESC";
+
+$sql_cek = "SELECT B.*, K.nama, P.nama_perwakilan FROM kasbon_beli B 
+INNER JOIN karyawan K on B.id_karyawan = K.nik 
+INNER JOIN perwakilan P on B.id_perwakilan = P.id ORDER BY tanggal DESC";
 $query_cek = mysqli_query($koneksi, $sql_cek);
 $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-
 
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->AddPage('L');
@@ -60,7 +62,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA FORMULIR ENTERTAIMENT</title>
+    <title>DATA KAS BON</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%; border-collapse: collapse" border="0">
@@ -78,35 +80,25 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">DATA FORMULIR ENTERTAIMENT</h3>
+    <h3 align="center">LAPORAN DATA KASBON</h3>
     <table width="100%" border="1" cellpading="10" cellspacing="0">
     <tr>
         <th>No</th>
+        <th>Kantor Perwakilan</th>
         <th>Nama Karyawan</th>
         <th>Tanggal</th>
-        <th>Kegiatan</th>
-        <th>Nama Tempat</th>
-        <th>Alamat</th>
-        <th>Jumlah Orang</th>
-        <th>Nama Relasi</th>
-        <th>Posisi</th>
-        <th>Nama Perusahaan</th>
-        <th>Keterangan</th>
+        <th>Keperluan Kasbon</th>
+        <th>Value</th>
     </tr> ';
     $i = 1;
     foreach( $query_cek as $data) {
         $html .= '<tr>
         <td align="center">'. $i++ .'</td>
+        <td align="left" style="padding-left:10px">'. $data["nama_perwakilan"].'</td>
         <td align="left" style="padding-left:10px">'. $data["nama"].'</td>
-        <td align="left" style="padding-left:10px">'. tanggal_indo($data["tanggal"], false).'</td>
-        <td align="left" style="padding-left:10px">'. $data["jenis"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_tempat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["alamat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["jumlah"].' Orang</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["posisi_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["perusahaan_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["keterangan"].'</td>
+        <td align="left" style="padding-left:10px">'.tanggal_indo($data["tanggal"]).'</td>
+        <td align="left" style="padding-left:10px">'. $data["keperluan"].'</td>
+        <td align="right" style="padding-right:10px">Rp '. number_format($data["harga"],0,",",".").'</td>
         </tr>';
     }
 
@@ -134,7 +126,7 @@ $html = '
     </tr>
     <tr>
     </tr>
-</table>
+</table>  
     
 </body>
 </html>';

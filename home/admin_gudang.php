@@ -1,8 +1,8 @@
 <?php
-	$sql = $koneksi->query("SELECT count(id) as absensi from absensi");
+	$sql = $koneksi->query("SELECT count(id) as bongkaran from bongkaran");
 	while ($data= $sql->fetch_assoc()) {
 	
-		$absensi=$data['absensi'];
+		$bongkaran=$data['bongkaran'];
 	}
 ?>
 
@@ -25,15 +25,15 @@
 			<div class="small-box bg-red">
 				<div class="inner">
 					<h4>
-						<?= $absensi; ?>
+						<?= $bongkaran; ?>
 					</h4>
 
-					<p>Data Absensi</p>
+					<p>Data Bongkaran</p>
 				</div>
 				<div class="icon">
 					<i class="fas fa-fingerprint"></i>
 				</div>
-				<a href="?page=karyawan/data_absensi" class="small-box-footer">More info
+				<a href="?page=MyAppGudang/data_bongkaran" class="small-box-footer">More info
 					<i class="fa fa-arrow-circle-right"></i>
 				</a>
 			</div>

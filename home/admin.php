@@ -26,6 +26,41 @@
 		$kasbon=$data['kasbon'];
 	}
 ?>
+<?php
+	$sql = $koneksi->query("SELECT count(id) as bensin from bensin");
+	while ($data= $sql->fetch_assoc()) {
+	
+		$bensin=$data['bensin'];
+	}
+?>
+<?php
+	$sql = $koneksi->query("SELECT count(id) as entertaiment from entertaiment");
+	while ($data= $sql->fetch_assoc()) {
+	
+		$entertaiment=$data['entertaiment'];
+	}
+?>
+<?php
+	$sql = $koneksi->query("SELECT count(id) as kasbon_beli from kasbon_beli");
+	while ($data= $sql->fetch_assoc()) {
+	
+		$kasbon_beli=$data['kasbon_beli'];
+	}
+?>
+<?php
+	$sql = $koneksi->query("SELECT count(id) as rencana_kunjungan from rencana_kunjungan");
+	while ($data= $sql->fetch_assoc()) {
+	
+		$rencana_kunjungan=$data['rencana_kunjungan'];
+	}
+?>
+<?php
+	$sql = $koneksi->query("SELECT count(id) as mutasi from mutasi");
+	while ($data= $sql->fetch_assoc()) {
+	
+		$mutasi=$data['mutasi'];
+	}
+?>
 
 
 <!-- Content Header (Page header) -->
@@ -123,15 +158,91 @@
 			<div class="small-box bg-red">
 				<div class="inner">
 					<h4>
-						<?= $gaji; ?>
+						<?= $bensin; ?>
 					</h4>
 
-					<p>Data Slip Gaji</p>
+					<p>Data Pembelian BBM</p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-gas-pump"></i>
+				</div>
+				<a href="?page=MyApp/data_bensin" class="small-box-footer">More info
+					<i class="fa fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-primary">
+				<div class="inner">
+					<h4>
+						<?= $entertaiment; ?>
+					</h4>
+
+					<p>Data Entertaiment</p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-music"></i>
+				</div>
+				<a href="?page=MyApp/data_entertaiment" class="small-box-footer">More info
+					<i class="fa fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-green">
+				<div class="inner">
+					<h4>
+						<?= $kasbon_beli; ?>
+					</h4>
+
+					<p>Data Kasbon</p>
 				</div>
 				<div class="icon">
 					<i class="fas fa-money-bill-wave"></i>
 				</div>
-				<a href="?page=MyApp/data_gaji" class="small-box-footer">More info
+				<a href="?page=MyApp/data_kasbonbeli" class="small-box-footer">More info
+					<i class="fa fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-orange">
+				<div class="inner">
+					<h4>
+						<?= $rencana_kunjungan; ?>
+					</h4>
+
+					<p>Data Rencana Kunjungan</p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-cab"></i>
+				</div>
+				<a href="?page=MyApp/data_kunjungan" class="small-box-footer">More info
+					<i class="fa fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-xs-6">
+			<!-- small box -->
+			<div class="small-box bg-yellow">
+				<div class="inner">
+					<h4>
+						<?= $mutasi; ?>
+					</h4>
+
+					<p>Data Mutasi Kas</p>
+				</div>
+				<div class="icon">
+					<i class="fas fa-file-invoice-dollar"></i>
+				</div>
+				<a href="?page=MyApp/data_mutasi" class="small-box-footer">More info
 					<i class="fa fa-arrow-circle-right"></i>
 				</a>
 			</div>

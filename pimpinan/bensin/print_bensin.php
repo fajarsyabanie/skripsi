@@ -45,12 +45,15 @@ function tanggal_indo($date, $cetak_hari = false)
 require '/xampp/htdocs/apkbaru/inc/koneksi.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
-$sql_cek = "SELECT E.*, K.nama from entertaiment E INNER JOIN karyawan K ON E.id_karyawan = K.nik ORDER BY tanggal DESC";
-$query_cek = mysqli_query($koneksi, $sql_cek);
-$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+$bensin = mysqli_query($koneksi, "SELECT * FROM bensin B 
+INNER JOIN karyawan K ON K.nik = B.id_karyawan 
+INNER JOIN perwakilan p ON p.id = B.id_perwakilan
+INNER JOIN armada A ON A.id = B.id_armada
+ORDER BY t_isi DESC");
 
 
 $mpdf = new \Mpdf\Mpdf();
+
 $mpdf->AddPage('L');
 $html = '
 <!DOCTYPE html>
@@ -60,7 +63,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA FORMULIR ENTERTAIMENT</title>
+    <title>Data BENSIN</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%; border-collapse: collapse" border="0">
@@ -78,41 +81,38 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">DATA FORMULIR ENTERTAIMENT</h3>
-    <table width="100%" border="1" cellpading="10" cellspacing="0">
+    <h3 align="center">DATA BENSIN</h3>
+    <table width="100%" border="1" style="border-collapse: collapse">
     <tr>
         <th>No</th>
-        <th>Nama Karyawan</th>
-        <th>Tanggal</th>
-        <th>Kegiatan</th>
-        <th>Nama Tempat</th>
-        <th>Alamat</th>
-        <th>Jumlah Orang</th>
-        <th>Nama Relasi</th>
-        <th>Posisi</th>
-        <th>Nama Perusahaan</th>
-        <th>Keterangan</th>
+        <th>Perwakilan</th>
+        <th>Armada</th>
+        <th>Nama Pengisi</th>
+        <th>KM Awal</th>
+        <th>KM Akhir</th>
+        <th>Tgl Isi</th>
+        <th>Tujuan</th>
+        <th>Harga</th>
+        <th>Biaya</th>
     </tr> ';
-    $i = 1;
-    foreach( $query_cek as $data) {
-        $html .= '<tr>
-        <td align="center">'. $i++ .'</td>
-        <td align="left" style="padding-left:10px">'. $data["nama"].'</td>
-        <td align="left" style="padding-left:10px">'. tanggal_indo($data["tanggal"], false).'</td>
-        <td align="left" style="padding-left:10px">'. $data["jenis"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_tempat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["alamat"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["jumlah"].' Orang</td>
-        <td align="left" style="padding-left:10px">'. $data["nama_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["posisi_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["perusahaan_relasi"].'</td>
-        <td align="left" style="padding-left:10px">'. $data["keterangan"].'</td>
+$i = 1;
+foreach ($bensin as $row) {
+  $html .= '<tr>
+        <td align="center">' . $i++ . '</td>
+        <td align="left" style="padding-left:10px">' . $row["nama_perwakilan"] . '</td>
+        <td align="left" style="padding-left:10px" width="15%">' .  $row["nama_armada"] . '</td>
+        <td align="left" style="padding-left:10px" width="13%">' .  $row["nama"] . '</td>
+        <td align="right" style="padding-right:10px">' . $row["km_awal"] . ' Km</td>
+        <td align="right" style="padding-right:10px">' . $row["km_akhir"] . ' Km</td>
+        <td align="left" >' . date("d-m-y",strtotime($row["t_isi"])) . '</td>
+        <td align="left" style="padding-left:10px">' . $row["tujuan"] . '</td>
+        <td align="right" >Rp ' . number_format($row["harga"],0,",",".") . '</td>
+        <td align="right" >Rp ' . number_format($row["biaya"],0,",",".") . '</td>
         </tr>';
-    }
+}
 
-    $html .=   '</table>
-    <br>
-
+$html .=   '</table>
+<br>
     <table style="page-break-inside: avoid; border-collapse: collapse" border="0" width="100%" autosize="1">
     <tr>
     <td width="75%"></td>
@@ -136,10 +136,11 @@ $html = '
     </tr>
 </table>
     
+    
 </body>
 </html>';
 
-    
+
 
 $mpdf->WriteHTML($html);
 $mpdf->Output();

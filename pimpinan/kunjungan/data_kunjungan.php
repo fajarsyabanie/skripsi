@@ -24,8 +24,8 @@
 <!-- Main content -->
 <section class="content">
 	<div class="box box-primary">
-		<div class="box-header with-border">
-			<a href="?page=MyAppSales/add_kunjungan" title="Tambah Data" class="btn btn-primary">
+		<!-- <div class="box-header with-border">
+			<a href="?page=MyApp/add_kunjungan" title="Tambah Data" class="btn btn-primary">
 				<i class="glyphicon glyphicon-plus"></i> Tambah Pengajuan Rencana Kunjungan</a>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -35,7 +35,7 @@
 					<i class="fa fa-remove"></i>
 				</button>
 			</div>
-		</div>
+		</div> -->
 		<!-- /.box-header -->
 		<div class="box-body">
 			<div class="table-responsive">
@@ -86,13 +86,13 @@
 								</td>
 
 								<td>
-									<a href="?page=MyAppSales/edit_kunjungan&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+									<a href="?page=MyApp/edit_kunjungan&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
 									</a>
-									<a href="sales/kunjungan/print_kunjungan.php?kode=<?php echo $data['id']; ?>" target="blank" title="Print" class="btn btn-success">
+									<a href="admin/kunjungan/print_kunjungan.php?kode=<?php echo $data['id']; ?>" target="blank" title="Print" class="btn btn-success">
 										<i class="glyphicon glyphicon-print"></i>
 									</a>
-									<a href="?page=MyAppSales/del_kunjungan&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+									<a href="?page=MyApp/del_kunjungan&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>
 								</td>
 							</tr>
