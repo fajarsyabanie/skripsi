@@ -1,7 +1,11 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM bensin WHERE id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM bensin b
+	INNER JOIN karyawan k on k.nik = b.id_karyawan
+	INNER JOIN perwakilan p on p.id = b.id_perwakilan
+	INNER JOIN armada a on a.id = b.id_armada
+	WHERE b.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }
@@ -45,17 +49,15 @@ if (isset($_GET['kode'])) {
 
 					<div class="form-group">
 							<label>Kantor Perwakilan</label>
-							<select name="id_perwakilan" id="id_perwakilan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih Perwakilan --</option>
+							<select name="id_cabang" id="id_cabang" class="form-control select3" style="width: 100%;">
 								<?php
 								// ambil data dari database
-								$query = "select * from perwakilan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query3 = "select * from perwakilan";
+								$hasil3 = mysqli_query($koneksi, $query3);
+								while ($row3 = mysqli_fetch_assoc($hasil3)) {
+									$selected = $row3['id'] == $data_cek['id'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row3['id'] . '">' . $row3['nama_perwakilan'] . '</option>';
 								?>
-									<option value="<?php echo $row['id'] ?>">
-										<?php echo $row['nama_perwakilan'] ?>
-									</option>
 								<?php
 								}
 								?>
@@ -64,41 +66,37 @@ if (isset($_GET['kode'])) {
 
 						<div class="form-group">
 							<label>Jenis Kendaraan</label>
-							<select name="id_armada" id="id_armada" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih Armada --</option>
+							<select name="id_armada" id="id_armada" class="form-control select4" style="width: 100%;">
 								<?php
 								// ambil data dari database
-								$query = "select * from armada ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query4= "select * from armada ";
+								$hasil4 = mysqli_query($koneksi, $query4);
+								while ($row4 = mysqli_fetch_array($hasil4)) {
+									$selected = $row4['id'] == $data_cek['id'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row4['id'] . '">' . $row4['nama_armada'] . '</option>';
 								?>
-									<option value="<?php echo $row['id'] ?>">
-										<?php echo $row['nama_armada'], $row['plat'] ?>
-									</option>
 								<?php
 								}
 								?>
 							</select>
 						</div>
 
-					<div class="form-group">
-								<label>Nama Karyawan Mengisi BBM</label>
-								<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-									<option selected="selected">-- Pilih Nama Karyawan --</option>
-									<?php
-									// ambil data dari database
-									$query = "select * from karyawan ";
-									$hasil = mysqli_query($koneksi, $query);
-									while ($row = mysqli_fetch_array($hasil)) {
-									?>
-										<option value="<?php echo $row['nik'] ?>">
-											<?php echo $row['nama'] ?>
-										</option>
-									<?php
-									}
-									?>
-								</select>
-							</div>
+						<div class="form-group">
+							<label>Nama Karyawan Yang Mengisi BBM</label>
+							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
+								<?php
+								// ambil data dari database
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
+								?>
+								<?php
+								}
+								?>
+							</select>
+						</div>
 
 							<div class="form-group">
 								<label>Tanggal Pengisian BBM</label>

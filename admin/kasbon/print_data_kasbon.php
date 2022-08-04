@@ -92,37 +92,35 @@ $html = '
     </tr>
     <tr>
     <td>Cabang</td>
-    <td>: TSM</td>
+    <td>: TSM Banjarmasin</td>
     </tr>
     </table>
     <br>
     <p>Dengan ini mengajukan permohonan peminjaman uang kepada Perusahaan sebagai berikut :</p>
     <br>
 
-    <table width="50%" border="0" cellpading="10" cellspacing="0">
+    <table width="100%" border="0" cellpading="10" cellspacing="0">
     <tr>
-    <td>Besarnya Pinjaman</td>
-    <td>: ' . $data_cek["besar_pinjaman"] . '</td>
+    <td width="35%">Besarnya Pinjaman</td>
+    <td>: Rp' . number_format($data_cek["besar_pinjaman"],0,",",".") . '</td>
     </tr>
     <tr>
-    <td>Keperluan</td>
+    <td width="35%">Keperluan</td>
     <td>: ' . $data_cek["keperluan"] . '</td>
     </tr>
     <tr>
-    <td>Jangka Waktu Pengembalian</td>
+    <td width="35%">Jangka Waktu Pengembalian</td>
     <td>: ' . $data_cek["jangka_waktu"] . ' Bulan</td>
     </tr>
     <tr>
-    <td>Jumlah Pemotongan</td>
-    <td>: ' . $data_cek["jumlah_pemotongan"] . '</td>
+    <td width="35%">Jumlah Pemotongan</td>
+    <td>: Rp' . number_format($data_cek["jumlah_pemotongan"],0,",",".") . '</td>
     </tr>
     <tr>
-    <td>Cara Pengembalian</td>
+    <td width="35%">Cara Pengembalian</td>
     <td>: ' . $data_cek["cara_pengembalian"] . '</td>
     </tr>
     </table>
-    <br>
-    <br>
     <br>
     <br>
     <br>
@@ -154,7 +152,7 @@ $html = '
         </tr>
         <tr>
             <td align="center" style="width: 30%; padding-top: 90px; padding-center: 15px">
-            Nama :' . $data_cek["nama"] . '
+            ' . $data_cek["nama"] . '
             </td>
             <td align="left" style="width: 30%; padding-top: 90px; padding-center: 15px">
             Nama :
@@ -167,7 +165,7 @@ $html = '
             </td>
         <tr>
             <td align="center">
-            Tanggal :' . tanggal_indo($data_cek['tanggal'],false) . '
+            ' . tanggal_indo($data_cek['tanggal'],false) . '
             </td>
             <td align="left">
             Tanggal :

@@ -1,12 +1,3 @@
-<?php
-
-if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM bensin WHERE id='" . $_GET['kode'] . "'";
-	$query_cek = mysqli_query($koneksi, $sql_cek);
-	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-}
-?>
-
 <section class="content-header">
 	<h1>
 		Laporan
@@ -29,7 +20,7 @@ if (isset($_GET['kode'])) {
 				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Pengisian BBM</a>
 			<a href="admin/bensin/print_bensin.php" title="Print Data" target="blank" class="btn btn-success">
 				<i class="glyphicon glyphicon-print"></i> Print</a>
-				
+
 		</div>
 		<!-- /.box-header -->
 		<div class="box-body">
@@ -53,7 +44,7 @@ if (isset($_GET['kode'])) {
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT * FROM bensin B 
+						$sql = $koneksi->query("SELECT b.*, k.nama, a.nama_armada FROM bensin B 
 						INNER JOIN karyawan K ON K.nik = B.id_karyawan 
 						INNER JOIN armada A ON A.id = B.id_armada
 						ORDER BY t_isi DESC ");
@@ -65,27 +56,27 @@ if (isset($_GET['kode'])) {
 									<?php echo $no++; ?>
 								</td>
 								<td>
-									<?php echo date('l,d M Y',strtotime($data['t_isi'])); ?>
+									<?php echo date('l,d M Y', strtotime($data['t_isi'])); ?>
 								</td>
 								<td>
 									<?php echo $data['nama_armada']; ?>
 								</td>
 								<td>
 									<?php echo $data['tujuan']; ?>
-								</td> 
+								</td>
 								<td>
 									<?php echo $data['km_akhir'] - $data['km_awal'];
 									echo ' km' ?>
 								</td>
 								<td>
-									<?php echo round($data['biaya'] / $data['harga'],2);
+									<?php echo round($data['biaya'] / $data['harga'], 2);
 									echo ' ltr' ?>
 								</td>
 								<td>
-									<?php echo 'Rp ' ,number_format ($data['harga']); ?>
+									<?php echo 'Rp ', number_format($data['harga']); ?>
 								</td>
 								<td>
-									<?php echo 'Rp ' ,number_format ($data['biaya']); ?>
+									<?php echo 'Rp ', number_format($data['biaya']); ?>
 								</td>
 								<td>
 									<?php echo $data['nama']; ?>
@@ -95,6 +86,9 @@ if (isset($_GET['kode'])) {
 								<td>
 									<a href="?page=MyApp/edit_bensin&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
 										<i class="glyphicon glyphicon-edit"></i>
+									</a>
+									<a href="admin/bensin/print_bensin.php?kode=<?php echo $data['id']; ?>" title="Print" target="_blank" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
 									</a>
 									<a href="?page=MyApp/del_bensin&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
 										<i class="glyphicon glyphicon-trash"></i>

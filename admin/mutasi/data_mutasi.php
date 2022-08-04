@@ -10,7 +10,7 @@ if (isset($_GET['kode'])) {
 <section class="content-header">
 	<h1>
 		Laporan
-		<small>Arus Kas Keluar</small>
+		<small>Mutasi Kas Kecil</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
@@ -26,7 +26,7 @@ if (isset($_GET['kode'])) {
 	<div class="box box-primary">
 		<div class="box-header with-border">
 			<a href="?page=MyApp/add_mutasi" title="Tambah Data" class="btn btn-primary">
-				<i class="glyphicon glyphicon-plus"></i> Tambah Laporan Arus Kas Keluar</a>
+				<i class="glyphicon glyphicon-plus"></i> Tambah Mutasi Kas Kecil</a>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse">
 					<i class="fa fa-minus"></i>
@@ -83,7 +83,7 @@ if (isset($_GET['kode'])) {
 							while ($data2 = $sql2->fetch_assoc()) {
 							?>
 								<td>
-									<?php echo $data2['dana_masuk'] + $data2['dana_pegangan'] ?>
+									Rp<?php echo number_format($data2['dana_masuk'] + $data2['dana_pegangan'],0,",",".") ?>
 								</td>
 							<?php
 							}
@@ -94,7 +94,7 @@ if (isset($_GET['kode'])) {
 							while ($data3 = $sql3->fetch_assoc()) {
 							?>
 								<td>
-									<?php echo $data3['total']?>
+									Rp<?php echo number_format($data3['total'],0,",",".")?>
 								</td>
 							<?php
 							$total += $data3['total'];

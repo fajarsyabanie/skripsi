@@ -1,7 +1,10 @@
 <?php
 
 if (isset($_GET['kode'])) {
-	$sql_cek = "SELECT * FROM kasbon_beli WHERE id='" . $_GET['kode'] . "'";
+	$sql_cek = "SELECT * FROM kasbon_beli b
+	INNER JOIN perwakilan p ON p.id = b.id_perwakilan
+	INNER JOIN karyawan k ON k.nik = b.id_karyawan
+	WHERE b.id='" . $_GET['kode'] . "'";
 	$query_cek = mysqli_query($koneksi, $sql_cek);
 	$data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
 }
@@ -43,19 +46,17 @@ if (isset($_GET['kode'])) {
 				<form action="" method="post" enctype="multipart/form-data">
 					<div class="box-body">
 
-						<div class="form-group">
-							<label>Perwakilan</label>
-							<select name="id_perwakilan" id="id_perwakilan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih Perwakilan --</option>
+					<div class="form-group">
+							<label>Kantor Perwakilan</label>
+							<select name="id_perwakilan" id="id_perwakilan" class="form-control select3" style="width: 100%;">
 								<?php
 								// ambil data dari database
-								$query = "select * from perwakilan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query3 = "select * from perwakilan";
+								$hasil3 = mysqli_query($koneksi, $query3);
+								while ($row3 = mysqli_fetch_assoc($hasil3)) {
+									$selected = $row3['id'] == $data_cek['id'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row3['id'] . '">' . $row3['nama_perwakilan'] . '</option>';
 								?>
-									<option value="<?php echo $row['id'] ?>">
-										<?php echo $row['nama_perwakilan'] ?>
-									</option>
 								<?php
 								}
 								?>
@@ -65,16 +66,14 @@ if (isset($_GET['kode'])) {
 						<div class="form-group">
 							<label>Nama Karyawan</label>
 							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih --</option>
 								<?php
 								// ambil data dari database
-								$query = "select * from karyawan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
 								?>
-									<option value="<?php echo $row['nik'] ?>">
-										<?php echo $row['nama'] ?>
-									</option>
 								<?php
 								}
 								?>
@@ -100,7 +99,7 @@ if (isset($_GET['kode'])) {
 
 					<div class="box-footer">
 						<input type="submit" name="Ubah" value="Ubah" class="btn btn-success">
-						<a href="?page=MyApp/data_kasbon" class="btn btn-warning">Batal</a>
+						<a href="?page=MyApp/data_kasbonbeli" class="btn btn-warning">Batal</a>
 					</div>
 				</form>
 			</div>
@@ -116,7 +115,8 @@ if (isset($_POST['Ubah'])) {
 		id_karyawan='" . $_POST['id_karyawan'] . "',
 		tanggal='" . $_POST['tanggal'] . "',
 		keperluan='" . $_POST['keperluan'] . "',
-		harga='" . $_POST['harga'] . "',";
+		harga='" . $_POST['harga'] . "'
+		WHERE id='" . $_GET['kode'] . "'";
 	$query_ubah = mysqli_query($koneksi, $sql_ubah);
 
 	if ($query_ubah) {

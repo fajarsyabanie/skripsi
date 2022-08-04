@@ -86,6 +86,10 @@ $html = '
     foreach( $query_cek as $data) {
         $html .= '
         <tr>
+        <td align="left" style="padding-left:10px">Nama Karyawan</td>
+        <td align="left" style="padding-left:10px">: '. $data["nama"].'</td>
+        </tr>
+        <tr>
         <td align="left" style="padding-left:10px">Hari, Tanggal</td>
         <td align="left" style="padding-left:10px">: '. tanggal_indo($data["tanggal"], true).'</td>
         </tr>

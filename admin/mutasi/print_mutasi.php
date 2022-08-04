@@ -27,7 +27,7 @@ $html = '
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/css/print.css" class="css">
-    <title>PRINT DATA BONGKARAN</title>
+    <title>PRINT Laporan Arus Kas</title>
 </head>
 <body>
 <table style="border: 1px solid #fff; width: 100%;">
@@ -47,7 +47,7 @@ $html = '
     <hr style="color: black; margin: 0px; padding: 0px; height: 5px;">
     <br>
 
-    <h3 align="center">LAPORAN ARUS KAS KELUAR</h3>
+    <h3 align="center">LAPORAN ARUS KAS</h3>
 
     <p>Perwakilan : '. $data_cek["nama_perwakilan"].'</p>
     <p>Periode : '. date('d', strtotime($data_cek["t_awal"])).' - '. date('d M Y', strtotime($data_cek["t_akhir"])).'</p>

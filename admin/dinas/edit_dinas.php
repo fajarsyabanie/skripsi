@@ -1,7 +1,9 @@
 <?php
 
     if(isset($_GET['kode'])){
-        $sql_cek = "SELECT * FROM dinas WHERE id='".$_GET['kode']."'";
+        $sql_cek = "SELECT * FROM dinas d
+		INNER JOIN karyawan k on k.nik = d.id_karyawan
+		WHERE d.id='".$_GET['kode']."'";
         $query_cek = mysqli_query($koneksi, $sql_cek);
         $data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
     }
@@ -46,16 +48,14 @@
 					<div class="form-group">
 							<label>Nama Karyawan</label>
 							<select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-								<option selected="selected">-- Pilih --</option>
 								<?php
 								// ambil data dari database
-								$query = "select * from karyawan ";
-								$hasil = mysqli_query($koneksi, $query);
-								while ($row = mysqli_fetch_array($hasil)) {
+								$query2 = "select * from karyawan";
+								$hasil2 = mysqli_query($koneksi, $query2);
+								while ($row2 = mysqli_fetch_assoc($hasil2)) {
+									$selected = $row2['nik'] == $data_cek['nik'] ? 'selected' : '';
+									echo '<option ' . $selected . ' value="' . $row2['nik'] . '">' . $row2['nama'] . '</option>';
 								?>
-									<option value="<?php echo $row['nik'] ?>">
-										<?php echo $row['nama'] ?>
-									</option>
 								<?php
 								}
 								?>

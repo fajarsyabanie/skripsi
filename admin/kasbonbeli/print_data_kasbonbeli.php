@@ -55,7 +55,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 include '/xampp/htdocs/apkbaru/inc/koneksi.php';
 
 $sql_cek = "SELECT B.*, K.nama, P.nama_perwakilan FROM kasbon_beli B 
-INNER JOIN karyawan K on B.id_karyawan = K.id 
+INNER JOIN karyawan K on B.id_karyawan = K.nik 
 INNER JOIN perwakilan P on B.id_perwakilan = P.id WHERE B.id='" . $_GET['kode'] . "'";
 $query_cek = mysqli_query($koneksi, $sql_cek);
 $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);

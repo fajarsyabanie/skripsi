@@ -154,7 +154,7 @@ include "inc/koneksi.php";
 								</li>
 								<li>
 									<a href="?page=MyApp/data_mutasi">
-										<i class="fas fa-file-invoice-dollar"></i> Laporan Arus Kas Keluar</a>
+										<i class="fas fa-file-invoice-dollar"></i> Mutasi Kas Kecil</a>
 								</li>
 							</ul>
 						</li>

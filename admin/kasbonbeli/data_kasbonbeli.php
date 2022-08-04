@@ -40,7 +40,9 @@
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT B.*, K.nama, P.nama_perwakilan FROM kasbon_beli B INNER JOIN karyawan K on B.id_karyawan = K.id INNER JOIN perwakilan P on B.id_perwakilan = P.id");
+						$sql = $koneksi->query("SELECT B.*, K.nama, P.nama_perwakilan FROM kasbon_beli B 
+						INNER JOIN karyawan K on B.id_karyawan = K.nik 
+						INNER JOIN perwakilan P on B.id_perwakilan = P.id  ORDER BY tanggal DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 

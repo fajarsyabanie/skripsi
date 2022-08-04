@@ -48,8 +48,9 @@ if (isset($_GET['kode'])) {
 
 						<?php
 						$no = 1;
-						$sql = $koneksi->query("SELECT B.*, K.nama from bongkaran B INNER JOIN karyawan K ON B.id_karyawan = K.nik ORDER BY 
-				  tanggal_bongkaran DESC");
+						$sql = $koneksi->query("SELECT B.*, K.nama from bongkaran B 
+						INNER JOIN karyawan K ON B.id_karyawan = K.nik 
+						ORDER BY tanggal_bongkaran DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
