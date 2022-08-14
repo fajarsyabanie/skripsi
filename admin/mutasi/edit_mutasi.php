@@ -17,7 +17,7 @@ if (isset($_GET['kode'])) {
 <section class="content-header">
 	<h1>
 		Edit
-		<small>Uang Keluar</small>
+		<small>Mutasi Kas Kecil</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
@@ -35,7 +35,7 @@ if (isset($_GET['kode'])) {
 			<!-- general form elements -->
 			<div class="box box-success">
 				<div class="box-header with-border">
-					<h3 class="box-title">Edit Data Uang Keluar</h3>
+					<h3 class="box-title">Edit Data Mutasi Kas Kecil</h3>
 					<div class="box-tools pull-right">
 						<button type="button" class="btn btn-box-tool" data-widget="collapse">
 							<i class="fa fa-minus"></i>

@@ -3,7 +3,7 @@
 <section class="content-header">
 	<h1>
 		Laporan
-		<small>Arus Kas Keluar</small>
+		<small>Mutasi Kas Kecil</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li>
