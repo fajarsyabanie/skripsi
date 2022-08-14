@@ -7,7 +7,7 @@
 		<li>
 			<a href="index.php">
 				<i class="fa fa-home"></i>
-				<b>Website Absensi dan Administrasi keuangan PT Total Sarana Mandiri</b>
+				<b>Website Administrasi keuangan PT Total Sarana Mandiri</b>
 			</a>
 		</li>
 	</ol>
