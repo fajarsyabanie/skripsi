@@ -58,7 +58,7 @@
 						$no = 1;
 						$sql = $koneksi->query("SELECT R.*, K.nama from rencana_kunjungan R 
 						INNER JOIN karyawan K ON R.id_karyawan = K.nik ORDER BY 
-				  		t_dibuat DESC");
+				  		t_berangkat DESC");
 						while ($data = $sql->fetch_assoc()) {
 						?>
 
