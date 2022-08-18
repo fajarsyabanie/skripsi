@@ -141,7 +141,7 @@ if (isset($_POST['Ubah'])) {
 	$sql_ubah = "UPDATE bensin SET
 		id_karyawan='" . $_POST['id_karyawan'] . "',
 		id_armada='" . $_POST['id_armada'] . "',
-		id_perwakilan='" . $_POST['id_perwakilan'] . "',
+		id_perwakilan='" . $_POST['id_cabang'] . "',
 		km_awal='" . $_POST['km_awal'] . "',
 		km_akhir='" . $_POST['km_akhir'] . "',
 		t_isi='" . $_POST['t_isi'] . "',
