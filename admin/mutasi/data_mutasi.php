@@ -75,47 +75,54 @@ if (isset($_GET['kode'])) {
 								<td>
 									<?php echo date('d M Y', strtotime($data['t_awal'])), ' - ',  date('d M Y', strtotime($data['t_akhir'])); ?>
 								</td>
-							<?php
-						
-							?>
-							<?php
-							$sql2 = $koneksi->query("SELECT * FROM mutasi_tambah");
-							while ($data2 = $sql2->fetch_assoc()) {
-							?>
-								<td>
-									Rp<?php echo number_format($data2['dana_masuk'] + $data2['dana_pegangan'],0,",",".") ?>
-								</td>
-							<?php
-							}
-							?>
-							<?php
-							$total = 0;
-							$sql3 = $koneksi->query("SELECT *, SUM(biaya) AS total FROM mutasi_rinci");
-							while ($data3 = $sql3->fetch_assoc()) {
-							?>
-								<td>
-									Rp<?php echo number_format($data3['total'],0,",",".")?>
-								</td>
-							<?php
-							$total += $data3['total'];
-							}
-							?>
+								<?php
 
-							<td>
-								<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
-									<i class="glyphicon glyphicon-edit"></i>
-								</a>
-								<a href="admin/mutasi/print_mutasi.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
-									<i class="glyphicon glyphicon-print"></i>
-								</a>
-								<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
-									<i class="glyphicon glyphicon-trash"></i>
-								</a>
-							</td>
+								?>
+								<?php
+								$sql2 = $koneksi->query("SELECT * FROM mutasi_tambah WHERE id_mutasi ='" . $data['id'] . "'");
+								$dana_masuk = 0;
+								$dana_pegangan = 0;
+								while ($data2 = $sql2->fetch_assoc()) {
+									$dana_masuk += $data2['dana_masuk'];
+									$dana_pegangan += $data2['dana_pegangan'];
+								?>
+									<!-- <td>
+									Rp<?php echo number_format($data2['dana_masuk'] + $data2['dana_pegangan'], 0, ",", ".") ?>
+								</td> -->
+								<?php
+								}
+								?>
+								<td>
+									Rp<?php echo number_format($dana_masuk + $dana_pegangan, 0, ",", ".") ?>
+								</td>
+								<?php
+								$total = 0;
+								$sql3 = $koneksi->query("SELECT *, SUM(biaya) AS total FROM mutasi_rinci WHERE id_mutasi ='" . $data['id'] . "'");
+								while ($data3 = $sql3->fetch_assoc()) {
+								?>
+									<td>
+										Rp<?php echo number_format($data3['total'], 0, ",", ".") ?>
+									</td>
+								<?php
+									$total += $data3['total'];
+								}
+								?>
+
+								<td>
+									<a href="?page=MyApp/edit_mutasi&kode=<?php echo $data['id']; ?>" title="Ubah" class="btn btn-success">
+										<i class="glyphicon glyphicon-edit"></i>
+									</a>
+									<a href="admin/mutasi/print_mutasi.php?kode=<?php echo $data['id']; ?>" title="Print" target="blank" class="btn btn-success">
+										<i class="glyphicon glyphicon-print"></i>
+									</a>
+									<a href="?page=MyApp/del_mutasi&kode=<?php echo $data['id']; ?>" onclick="return confirm('Yakin Hapus Data Ini ?')" title="Hapus" class="btn btn-danger">
+										<i class="glyphicon glyphicon-trash"></i>
+									</a>
+								</td>
 							</tr>
-							<?php
+						<?php
 						}
-							?>
+						?>
 
 					</tbody>
 

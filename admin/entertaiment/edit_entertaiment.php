@@ -116,6 +116,8 @@ if (isset($_GET['kode'])) {
 if (isset($_POST['Ubah'])) {
 	//mulai proses ubah
 	$sql_ubah = "UPDATE entertaiment SET
+
+		id_karyawan='" . $_POST['id_karyawan'] . "',
 		tanggal='" . $_POST['tanggal'] . "',
 		jenis='" . $_POST['jenis'] . "',
 		nama_tempat='" . $_POST['nama_tempat'] . "',
